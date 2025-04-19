@@ -5,6 +5,32 @@ import { WeatherApiResponse } from "@openmeteo/sdk/weather-api-response";
 import { DateTime } from "luxon";
 import * as fs from "node:fs";
 
+export interface WeatherData {
+  current: {
+    time: Date;
+    timeAdjusted: string | null;
+    temperature: number;
+    weatherCode: { description: string; symbol: string };
+    windSpeed: number;
+    windDirection: number;
+  };
+  hourly: {
+    time: Date[];
+    timeAdjusted: string[];
+    weatherCode: { description: string; symbol: string }[];
+    temperature: number[];
+    precipitation: number[];
+    rain: number[];
+  };
+  daily: {
+    time: Date[];
+    timeAdjusted: string[];
+    weatherCode: { description: string; symbol: string }[];
+    temperatureMax: number[];
+    temperatureMin: number[];
+  };
+}
+
 // Helper function to form time ranges
 const toDateRange = (start: number, stop: number, step: number) =>
   Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
@@ -17,17 +43,16 @@ const toGmt = (d: Date) => {
   const gmtZone = utcDateTime.setZone("Europe/Stockholm");
 
   return gmtZone.toFormat("yyyy-MM-dd HH:mm:ssZZ");
-  //   return gmtZone.toJSDate();
 };
 
 const toWeatherDescription = (
   code: number
 ): { description: string; symbol: string } => {
-  return wmo4677WithSymbols[code];
+  return wmo4677WithSymbols[Number(code)];
 };
 
 const mapResponses = (responses: WeatherApiResponse[]) => {
-  const response = responses[0];
+  const response = responses![0];
 
   // Attributes for timezone and location
   const utcOffsetSeconds = response.utcOffsetSeconds();
@@ -57,11 +82,12 @@ const mapResponses = (responses: WeatherApiResponse[]) => {
         hourly.interval()
       ).map((t) => adjustTime(t, utcOffsetSeconds)),
       timeAdjusted: [] as string[],
-      weatherCode: Array.from(daily.variables(0)!.valuesArray()!).map(
-        toWeatherDescription
+      weatherCode: Array.from(hourly.variables(2)!.valuesArray()!).map((n) =>
+        toWeatherDescription(n)
       ),
       temperature: hourly.variables(0)!.valuesArray()!, // `.valuesArray()` get an array of floats
       precipitation: hourly.variables(1)!.valuesArray()!,
+      rain: hourly.variables(3)!.valuesArray()!,
     },
     daily: {
       time: toDateRange(
@@ -78,43 +104,40 @@ const mapResponses = (responses: WeatherApiResponse[]) => {
     },
   };
 
-  // .map((n) => toWeatherDescription(n)) as string[],
   weatherData.hourly.timeAdjusted = weatherData.hourly.time.map(toGmt);
   weatherData.daily.timeAdjusted = weatherData.daily.time.map(toGmt);
   weatherData.current.timeAdjusted = toGmt(weatherData.current.time);
 
-  //   fs.writeFile("./test.json", JSON.stringify(weatherData), (err) => {
-  //     if (err) {
-  //       console.error(err);
-  //     } else {
-  //       // file written successfully
-  //     }
-  //   });
-
-  // `weatherData` now contains a simple structure with arrays for datetime and weather data
-  //   for (let i = 0; i < weatherData.hourly.time.length; i++) {
-  //     // console.log(
-  //     //   weatherData.hourly.time[i].toISOString(),
-  //     //   weatherData.hourly.temperature2m[i]
-  //     // );
-  //   }
+  // fs.writeFileSync(
+  //   `./src/pages/api/_backup_${new Date().toISOString()}.json`,
+  //   JSON.stringify(weatherData)
+  // );
 
   return new Response(JSON.stringify(weatherData));
 };
 
-// 59.3327° N, 18.0656° E
-export async function GET() {
+const getWeatherData = async () => {
   const params = {
-    latitude: 52.52,
-    longitude: 13.41,
+    latitude: 59.33,
+    longitude: 18.07,
     current: "temperature_2m,weather_code,wind_speed_10m,wind_direction_10m",
-    hourly: "temperature_2m,precipitation,weather_code",
+    hourly: "temperature_2m,precipitation,weather_code,rain",
     daily: "weather_code,temperature_2m_max,temperature_2m_min",
   };
   const url = "https://api.open-meteo.com/v1/forecast";
-  const responses = await fetchWeatherApi(url, params);
-  //   let responses = null;
-  //   const res = fs.readFileSync("./src/pages/api/_raw_backup.json", "utf8");
-  //   responses = JSON.parse(res);
-  return mapResponses(responses);
+  const response = await fetchWeatherApi(url, params);
+  return mapResponses(response);
+};
+
+const mockWeatherData = () => {
+  const weatherData = fs.readFileSync(
+    "./src/pages/api/_backup_2025-04-19T19:43:04.877Z.json",
+    "utf8"
+  );
+  return new Response(weatherData);
+};
+
+// 59.3327° N, 18.0656° E
+export async function GET() {
+  return mockWeatherData();
 }

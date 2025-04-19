@@ -110,7 +110,7 @@ export const wmo4677WithSymbols: {
   },
   1: {
     description: "Clouds generally dissolving or becoming less developed",
-    symbol: "🌤️",
+    symbol: "🌥️",
   },
   2: { description: "State of sky on the whole unchanged", symbol: "" },
   3: { description: "Clouds generally forming or developing", symbol: "☁️" },
