@@ -3,3 +3,20 @@
 html {
   font-size: 16px;
 }
+
+.header-container,
+.header-container > * {
+  /* background-color: white; */
+  z-index: 1000;
+  width: 100%;
+}
+
+[data-is-top="false"] .header-container {
+  position: fixed !important;
+  border-bottom: 1px solid #eaeaea;
+  box-shadow: 0px -1px 5px 1px rgba(150, 150, 150, 0.75);
+}
+
+[data-is-top="false"] .main {
+  margin-top: 80px;
+}

@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js";
 import { Motion } from "solid-motionone";
-import { FaSolidChevronDown, FaSolidChevronUp } from "solid-icons/fa";
+import { FaSolidChevronUp } from "solid-icons/fa";
 
 export const ChevronToggle = ({
   initialOpen,

@@ -18,7 +18,7 @@ export const MainWeatherDisplay = ({
 
   return (
     <div class="flex justify-center">
-      <div class="flex  w-full max-w-2xl xl:max-w-3xl flex-col items-center rounded-xl bg-sky-200">
+      <div class="flex w-full max-w-2xl xl:max-w-3xl flex-col items-center rounded-xl bg-sky-200 text-white text-shadow-lg">
         <div class="py-7 w-full xl:w-2xl weather-entry flex flex-col ">
           <div class="flex flex-col items-center">
             <div class="flex gap-4 flex-row mb-2">
