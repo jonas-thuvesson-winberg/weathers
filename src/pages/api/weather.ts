@@ -174,5 +174,5 @@ const mockWeatherData2 = () => {
 
 // 59.3327° N, 18.0656° E
 export async function GET() {
-  return mockWeatherData();
+  return getWeatherData();
 }

@@ -53,15 +53,15 @@ export const WeatherEntry = (props: {
                 opacity: 1,
               }}
               transition={{
-                opacity: { duration: 1 },
+                opacity: { duration: 0.5 },
                 transform: { duration: 0.5 },
               }}
               exit={{
                 opacity: 0,
                 transform: "translateY(-20px)",
                 transition: {
-                  transform: { duration: 0.2 },
-                  opacity: { duration: 0.2 },
+                  transform: { duration: 0.1 },
+                  opacity: { duration: 0.1 },
                 },
               }}
               class="flex flex-row items-start justify-between w-full h-full p-2 pt-4"
@@ -69,8 +69,12 @@ export const WeatherEntry = (props: {
               <div>
                 <div class="text-lg weather-time">{getTime(time)}</div>
                 <div class="weather-date">{getDateDescriptive(time)}</div>
-                <div class="weather-temperature">{temperature}°C</div>
-                <div class="weather-precipitation">{precipitation} mm</div>
+                <div class="weather-temperature">
+                  {Math.round(temperature)}°C
+                </div>
+                <div class="weather-precipitation">
+                  {Math.round(precipitation)} mm
+                </div>
                 {/* <div class="weather-description">{description}</div> */}
               </div>
               <div class="text-3xl weather-symbol">{symbol}</div>

@@ -20,16 +20,16 @@ export const MainWeatherDisplay = ({
     <div class="flex justify-center">
       <div class="flex w-full max-w-2xl xl:max-w-3xl flex-col items-center rounded-xl bg-sky-200 text-white text-shadow-lg">
         <div class="py-7 w-full xl:w-2xl weather-entry flex flex-col ">
-          <div class="flex flex-col items-center">
-            <div class="flex gap-4 flex-row mb-2">
+          <div class="flex flex-col items-center justify-center">
+            <div class="flex gap-4 flex-row mb-2 mx-10">
               <h3 class="text-5xl font-bold">{Math.round(temperature)}°C</h3>
               <div class="text-5xl weather-symbol">{weatherSymbol}</div>
             </div>
-            <div class="text-xl mb-3">{weatherDescription}</div>
-            <div class="text-xl font-semibold">
+            <div class="text-xl mb-3 mx-10">{weatherDescription}</div>
+            <div class="text-xl font-semibold mx-10">
               Wind: {Math.round(windSpeed)} m/s, {Math.round(windDirection)}°
             </div>
-            <div class="text-xl font-semibold">
+            <div class="text-xl font-semibold mx-10">
               {getDateTimeDescriptive(time)}
             </div>
           </div>
