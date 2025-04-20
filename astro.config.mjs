@@ -3,6 +3,7 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import node from "@astrojs/node";
 import solidJs from "@astrojs/solid-js";
+import svgr from "vite-plugin-svgr";
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,7 +13,12 @@ export default defineConfig({
   }),
 
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      svgr({
+        include: "**/*.svg?component",
+      }),
+    ],
   },
 
   integrations: [solidJs()],

@@ -15,11 +15,14 @@
     "astro": "^5.7.4",
     "luxon": "^3.6.1",
     "openmeteo": "^1.2.0",
+    "solid-icons": "^1.1.0",
     "solid-js": "^1.9.5",
+    "solid-motionone": "^1.0.3",
     "tailwindcss": "^4.1.4"
   },
   "devDependencies": {
     "@types/luxon": "^3.6.2",
-    "@types/node": "^22.14.1"
+    "@types/node": "^22.14.1",
+    "vite-plugin-svgr": "^4.3.0"
   }
 }

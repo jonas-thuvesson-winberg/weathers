@@ -7,7 +7,7 @@ import * as fs from "node:fs";
 
 export interface WeatherData {
   current: {
-    time: Date;
+    time: string;
     timeAdjusted: string | null;
     temperature: number;
     weatherCode: { description: string; symbol: string };
@@ -15,7 +15,7 @@ export interface WeatherData {
     windDirection: number;
   };
   hourly: {
-    time: Date[];
+    time: string[];
     timeAdjusted: string[];
     weatherCode: { description: string; symbol: string }[];
     temperature: number[];
@@ -23,7 +23,7 @@ export interface WeatherData {
     rain: number[];
   };
   daily: {
-    time: Date[];
+    time: string[];
     timeAdjusted: string[];
     weatherCode: { description: string; symbol: string }[];
     temperatureMax: number[];
@@ -135,6 +135,41 @@ const mockWeatherData = () => {
     "utf8"
   );
   return new Response(weatherData);
+};
+
+const mockWeatherData2 = () => {
+  const weatherData: WeatherData = {
+    current: {
+      time: new Date().toISOString(),
+      timeAdjusted: null,
+      temperature: 10,
+      weatherCode: { description: "Clear", symbol: "☀️" },
+      windSpeed: 5,
+      windDirection: 180,
+    },
+    hourly: {
+      time: [new Date().toISOString(), new Date().toISOString()],
+      timeAdjusted: ["2025-04-19T19:43:04+02:00", "2025-04-20T21:00:04+02:00"],
+      weatherCode: [
+        { description: "Clear", symbol: "☀️" },
+        { description: "Partly cloudy", symbol: "🌤️" },
+      ],
+      temperature: [10, 12],
+      precipitation: [10, 0],
+      rain: [10, 0],
+    },
+    daily: {
+      time: [new Date().toISOString(), new Date().toISOString()],
+      timeAdjusted: ["2025-04-19T19:43:04+02:00", "2025-04-20T21:00:04+02:00"],
+      weatherCode: [
+        { description: "Clear", symbol: "☀️" },
+        { description: "Partly cloudy", symbol: "🌤️" },
+      ],
+      temperatureMax: [15, 18],
+      temperatureMin: [5, 7],
+    },
+  };
+  return new Response(JSON.stringify(weatherData));
 };
 
 // 59.3327° N, 18.0656° E

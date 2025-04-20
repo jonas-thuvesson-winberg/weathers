@@ -7,7 +7,7 @@ export const Header = () => {
   ];
 
   return (
-    <header class="flex flex-row justify-between items-center w-full h-[80px] px-2 md:px-10 lg:px-20 bg-blue-400">
+    <header class="flex flex-row justify-between items-center w-full h-[80px] px-2 md:px-10 lg:px-20">
       {" "}
       <h1 class="px-4 text-2xl">Weathers</h1>{" "}
       <div>
