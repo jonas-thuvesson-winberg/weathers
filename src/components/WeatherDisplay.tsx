@@ -49,7 +49,7 @@ export const WeatherDisplay = (props: { weatherData: WeatherData }) => {
   });
 
   return (
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col pt-5">
       <For each={weatherTableData()}>
         {(item) => (
           <WeatherEntry

@@ -23,22 +23,26 @@ export const WeatherEntry = (props: {
   };
 
   const chevronContainerClasses = createMemo(() => {
-    return open()
-      ? "flex justify-end pr-2 pb-2 border-b-1 border-gray-300"
-      : "flex justify-end pr-2 pb-2 border-b-1 border-white";
+    return open() ? "border-gray-300" : "border-gray-300";
   });
 
-  const containerClasses =
-    "py-7 w-full max-w-2xl xl:max-w-3xl weather-entry flex flex-wrap flex-col border-b-1 border-gray-300";
+  const containerClasses = createMemo(() => {
+    // return !open() ? "border-white" : "border-white";
+    return "";
+  });
 
   return (
     <div class="flex flex-col w-full items-center">
-      <div class={`${containerClasses}`}>
-        <div class={`${chevronContainerClasses()}`}>
+      <div
+        class={`pt-4 w-full max-w-2xl xl:max-w-3xl flex flex-wrap flex-col ${containerClasses()}`}
+      >
+        <div
+          class={`flex justify-end pr-2 pb-2 border-b-1 ${chevronContainerClasses()}`}
+        >
           <ChevronToggle
             handleClick={handleClick}
             initialOpen={open()}
-            duration={0.5}
+            duration={0.3}
           />
         </div>
         <Presence>
@@ -60,11 +64,11 @@ export const WeatherEntry = (props: {
                 opacity: 0,
                 transform: "translateY(-20px)",
                 transition: {
-                  transform: { duration: 0.1 },
-                  opacity: { duration: 0.1 },
+                  transform: { duration: 0.3 },
+                  opacity: { duration: 0.3 },
                 },
               }}
-              class="flex flex-row items-start justify-between w-full h-full p-2 pt-4"
+              class="flex flex-row items-start justify-between w-full h-full px-2 pt-4"
             >
               <div>
                 <div class="text-lg weather-time">{getTime(time)}</div>
