@@ -3,6 +3,7 @@ import { wmo4677WithSymbols } from "../../utils/weather-codes";
 import { fetchWeatherApi } from "openmeteo";
 import { WeatherApiResponse } from "@openmeteo/sdk/weather-api-response";
 import { DateTime } from "luxon";
+import { mockWeatherData as mockData } from "../../utils/mock-weather-data";
 import * as fs from "node:fs";
 
 export interface WeatherData {
@@ -130,11 +131,11 @@ const getWeatherData = async () => {
 };
 
 const mockWeatherData = () => {
-  const weatherData = fs.readFileSync(
-    "./src/pages/api/_backup_2025-04-19T19:43:04.877Z.json",
-    "utf8"
-  );
-  return new Response(weatherData);
+  // const weatherData = fs.readFileSync(
+  //   "./src/pages/api/_backup_2025-04-19T19:43:04.877Z.json",
+  //   "utf8"
+  // );
+  return new Response(JSON.stringify(mockData));
 };
 
 const mockWeatherData2 = () => {
@@ -174,5 +175,5 @@ const mockWeatherData2 = () => {
 
 // 59.3327° N, 18.0656° E
 export async function GET() {
-  return getWeatherData();
+  return mockWeatherData();
 }
