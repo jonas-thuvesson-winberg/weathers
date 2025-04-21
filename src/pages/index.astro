@@ -1,6 +1,7 @@
 ---
 import { MainWeatherDisplay } from "../components/MainWeatherDisplay";
 import { WeatherDisplay } from "../components/WeatherDisplay";
+import { WeatherDisplaySkeleton } from "../components/WeatherDisplaySkeleton";
 import Layout from "../layouts/Layout.astro";
 
 const res = await fetch(`${Astro.url.origin}/api/weather`).then(
@@ -14,6 +15,10 @@ const res = await fetch(`${Astro.url.origin}/api/weather`).then(
 
 <Layout>
   <!-- <h1>HELLO!</h1> -->
-  <MainWeatherDisplay weatherData={res} client:only="solid" />
-  <WeatherDisplay weatherData={res} client:only="solid" />
+  <MainWeatherDisplay weatherData={res} />
+  <WeatherDisplay weatherData={res} client:only="solid-js">
+    <div slot="fallback">
+      <WeatherDisplaySkeleton />
+    </div>
+  </WeatherDisplay>
 </Layout>

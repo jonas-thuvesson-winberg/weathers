@@ -12,7 +12,7 @@ export const WeatherDisplay = (props: { weatherData: WeatherData }) => {
       },
     } = data();
 
-    let out: [string, number, number, string][] = [];
+    let out: [string, number, number, string, string][] = [];
 
     // Is supposed to be array, but API I'm using is stupid
     const tempLength = Array.isArray(temperature)
@@ -41,6 +41,7 @@ export const WeatherDisplay = (props: { weatherData: WeatherData }) => {
         new Date(time[i]).toString(),
         Math.floor(Number(temperature[i])),
         precipitation[i],
+        description,
         symbol,
       ]);
     }
@@ -50,16 +51,17 @@ export const WeatherDisplay = (props: { weatherData: WeatherData }) => {
 
   return (
     <div class="flex flex-col pt-5">
-      <For each={weatherTableData()}>
-        {(item) => (
-          <WeatherEntry
-            time={item[0]}
-            temperature={item[1]}
-            precipitation={item[2]}
-            symbol={item[3]}
-          />
-        )}
-      </For>
+        <For each={weatherTableData()}>
+          {(item) => (
+            <WeatherEntry
+              time={item[0]}
+              temperature={item[1]}
+              precipitation={item[2]}
+              description={item[3]}
+              symbol={item[4]}
+            />
+          )}
+        </For>
     </div>
   );
 };

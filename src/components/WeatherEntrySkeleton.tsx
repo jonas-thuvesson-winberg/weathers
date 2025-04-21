@@ -8,16 +8,8 @@ import {
   getTime,
 } from "../utils/date-utils";
 
-export const WeatherEntry = (props: {
-  time: string;
-  temperature: number;
-  precipitation: number;
-  description: string;
-  symbol: string;
-}) => {
-  const { time, temperature, precipitation, symbol, description } = props;
-
-  const [open, setOpen] = createSignal(true);
+export const WeatherEntrySkeleton = () => {
+  const [open, setOpen] = createSignal(false);
 
   const handleClick = () => {
     setOpen(!open());
@@ -71,18 +63,14 @@ export const WeatherEntry = (props: {
               }}
               class="flex flex-row items-start justify-between w-full h-full px-2 pt-4"
             >
-              <div>
-                <div class="text-lg weather-time">{getTime(time)}</div>
-                <div class="weather-date">{getDateDescriptive(time)}</div>
-                <div class="weather-temperature">
-                  {Math.round(temperature)}°C
-                </div>
-                <div class="weather-precipitation">
-                  {Math.round(precipitation)} mm
-                </div>
-                <div class="weather-description">{description}</div>
+              {/* <div>
+                <div class="p-3 bg-gray-500 rounded-md w-[200px]"></div>
+                <div class="bg-gray-500 rounded-md"></div>
+                <div class="bg-gray-500 rounded-md"></div>
+                <div class="weather-precipitation"></div>
+                <div class="weather-description"></div>
               </div>
-              <div class="text-3xl weather-symbol">{symbol}</div>
+              <div class="text-3xl weather-symbol">➖</div> */}
             </Motion.div>
           )}
         </Presence>
