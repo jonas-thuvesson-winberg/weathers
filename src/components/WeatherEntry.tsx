@@ -74,11 +74,9 @@ export const WeatherEntry = (props: {
               <div>
                 <div class="text-lg weather-time">{getTime(time)}</div>
                 <div class="weather-date">{getDateDescriptive(time)}</div>
-                <div class="weather-temperature">
-                  {Math.round(temperature)}°C
-                </div>
+                <div class="weather-temperature">{temperature.toFixed(1)}°</div>
                 <div class="weather-precipitation">
-                  {Math.round(precipitation)} mm
+                  {precipitation.toFixed(2)} mm
                 </div>
                 <div class="weather-description">{description}</div>
               </div>

@@ -138,13 +138,13 @@ export const wmo4677WithSymbols: {
   13: { description: "Lightning visible, no thunder heard", symbol: "⛈️" },
   14: {
     description: "Precipitation within sight, not reaching the ground or sea",
-    symbol: "🌡️",
+    symbol: "🌧️",
   },
   15: {
     description: "Precipitation distant (>5 km), reaching ground or sea",
-    symbol: "🌡️",
+    symbol: "🌧️",
   },
-  16: { description: "Precipitation near but not at station", symbol: "🌡️" },
+  16: { description: "Precipitation near but not at station", symbol: "🌧️" },
   17: {
     description: "Thunderstorm, but no precipitation at time of observation",
     symbol: "⛈️",
@@ -217,16 +217,16 @@ export const wmo4677WithSymbols: {
   },
   48: { description: "Fog depositing rime, sky visible", symbol: "🌫️" },
   49: { description: "Fog depositing rime, sky invisible", symbol: "🌫️" },
-  50: { description: "Drizzle, intermittent, slight", symbol: "🌦️" },
-  51: { description: "Drizzle, continuous, slight", symbol: "🌦️" },
-  52: { description: "Drizzle, intermittent, moderate", symbol: "🌦️" },
-  53: { description: "Drizzle, continuous, moderate", symbol: "🌦️" },
-  54: { description: "Drizzle, intermittent, heavy", symbol: "🌦️" },
-  55: { description: "Drizzle, continuous, heavy", symbol: "🌦️" },
-  56: { description: "Freezing drizzle, slight", symbol: "🌦️" },
-  57: { description: "Freezing drizzle, moderate or heavy", symbol: "🌦️" },
-  58: { description: "Drizzle and rain, slight", symbol: "🌦️" },
-  59: { description: "Drizzle and rain, moderate or heavy", symbol: "🌦️" },
+  50: { description: "Drizzle, intermittent, slight", symbol: "🌧️" },
+  51: { description: "Drizzle, continuous, slight", symbol: "🌧️" },
+  52: { description: "Drizzle, intermittent, moderate", symbol: "🌧️" },
+  53: { description: "Drizzle, continuous, moderate", symbol: "🌧️" },
+  54: { description: "Drizzle, intermittent, heavy", symbol: "🌧️" },
+  55: { description: "Drizzle, continuous, heavy", symbol: "🌧️" },
+  56: { description: "Freezing drizzle, slight", symbol: "🌧️" },
+  57: { description: "Freezing drizzle, moderate or heavy", symbol: "🌧️" },
+  58: { description: "Drizzle and rain, slight", symbol: "🌧️" },
+  59: { description: "Drizzle and rain, moderate or heavy", symbol: "🌧️" },
   60: { description: "Rain, intermittent, slight", symbol: "🌧️" },
   61: { description: "Rain, continuous, slight", symbol: "🌧️" },
   62: { description: "Rain, intermittent, moderate", symbol: "🌧️" },
@@ -268,10 +268,10 @@ export const wmo4677WithSymbols: {
     description: "Showers of snow pellets or small hail, moderate or heavy",
     symbol: "❄️",
   },
-  89: { description: "Showers of hail (no thunder), slight", symbol: "🌦️" },
+  89: { description: "Showers of hail (no thunder), slight", symbol: "🌧️" },
   90: {
     description: "Showers of hail (no thunder), moderate or heavy",
-    symbol: "🌦️",
+    symbol: "🌧️",
   },
   91: { description: "Thunderstorm earlier, slight rain now", symbol: "🌧️" },
   92: {
@@ -301,4 +301,32 @@ export const wmo4677WithSymbols: {
   },
   98: { description: "Thunderstorm with duststorm or sandstorm", symbol: "⛈️" },
   99: { description: "Thunderstorm now, heavy, with hail", symbol: "⛈️" },
+};
+
+export const normalizeWeatherCodes = (
+  weatherCodes: { description: string; symbol: string }[]
+) => {
+  let tempArr = [];
+  for (let i = 0; i < weatherCodes.length; i++) {
+    let temp: { description: string; symbol: string } = {
+      description: weatherCodes[i].description,
+      symbol: weatherCodes[i].symbol,
+    };
+
+    let current = i;
+    while (
+      weatherCodes[current].description.toLowerCase().trim() ===
+      "state of sky on the whole unchanged"
+    ) {
+      current--;
+      if (current > 0) {
+        temp.symbol = weatherCodes[current].symbol;
+        temp.description = weatherCodes[current].description;
+      } else {
+        break;
+      }
+    }
+    tempArr.push(temp);
+  }
+  return tempArr;
 };

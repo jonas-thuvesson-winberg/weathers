@@ -7,28 +7,29 @@ import { mockWeatherData as mockData } from "../../utils/mock-weather-data";
 import * as fs from "node:fs";
 
 export interface WeatherData {
+  location: string;
   current: {
     time: string;
-    timeAdjusted: string | null;
     temperature: number;
     weatherCode: { description: string; symbol: string };
     windSpeed: number;
     windDirection: number;
+    precipitation?: number;
+    timeAdjusted?: string | null;
   };
   hourly: {
     time: string[];
-    timeAdjusted: string[];
     weatherCode: { description: string; symbol: string }[];
     temperature: number[];
     precipitation: number[];
-    rain: number[];
+    timeAdjusted?: string[];
   };
   daily: {
     time: string[];
-    timeAdjusted: string[];
     weatherCode: { description: string; symbol: string }[];
-    temperatureMax: number[];
-    temperatureMin: number[];
+    timeAdjusted?: string[];
+    temperatureMax?: number[];
+    temperatureMin?: number[];
   };
 }
 
@@ -67,47 +68,49 @@ const mapResponses = (responses: WeatherApiResponse[]) => {
   const daily = response.daily()!;
 
   // Note: The order of weather variables in the URL query and the indices below need to match!
-  const weatherData = {
+  const weatherData: WeatherData = {
+    // TODO: Make location dynamic
+    location: 'Stockholm',
     current: {
-      time: new Date(adjustTime(Number(current.time()), utcOffsetSeconds)),
+      time: new Date(
+        adjustTime(Number(current.time()), utcOffsetSeconds)
+      ).toString(),
       timeAdjusted: null as string | null,
       temperature: current.variables(0)!.value(), // Current is only 1 value, therefore `.value()`
       weatherCode: toWeatherDescription(current.variables(1)!.value()),
-      windSpeed: current.variables(2)!.value(),
-      windDirection: current.variables(3)!.value(),
+      precipitation: current.variables(2)!.value(),
+      windSpeed: current.variables(3)!.value(),
+      windDirection: current.variables(4)!.value(),
     },
     hourly: {
       time: toDateRange(
         Number(hourly.time()),
         Number(hourly.timeEnd()),
         hourly.interval()
-      ).map((t) => adjustTime(t, utcOffsetSeconds)),
-      timeAdjusted: [] as string[],
-      weatherCode: Array.from(hourly.variables(2)!.valuesArray()!).map((n) =>
+      ).map((t) => adjustTime(t, utcOffsetSeconds).toString()),
+      weatherCode: Array.from(hourly.variables(1)!.valuesArray()!).map((n) =>
         toWeatherDescription(n)
       ),
-      temperature: hourly.variables(0)!.valuesArray()!, // `.valuesArray()` get an array of floats
-      precipitation: hourly.variables(1)!.valuesArray()!,
-      rain: hourly.variables(3)!.valuesArray()!,
+      temperature: Array.from(hourly.variables(0)!.valuesArray()!), // `.valuesArray()` get an array of floats
+      precipitation: Array.from(hourly.variables(2)!.valuesArray()!),
     },
     daily: {
       time: toDateRange(
         Number(daily.time()),
         Number(daily.timeEnd()),
         daily.interval()
-      ).map((t) => adjustTime(t, utcOffsetSeconds)),
-      timeAdjusted: [] as string[],
+      ).map((t) => adjustTime(t, utcOffsetSeconds).toString()),
       weatherCode: Array.from(daily.variables(0)!.valuesArray()!).map(
         toWeatherDescription
       ),
-      temperatureMax: daily.variables(1)!.valuesArray()!,
-      temperatureMin: daily.variables(2)!.valuesArray()!,
+      temperatureMax: Array.from(daily.variables(1)!.valuesArray()!),
+      temperatureMin: Array.from(daily.variables(2)!.valuesArray()!),
     },
   };
 
-  weatherData.hourly.timeAdjusted = weatherData.hourly.time.map(toGmt);
-  weatherData.daily.timeAdjusted = weatherData.daily.time.map(toGmt);
-  weatherData.current.timeAdjusted = toGmt(weatherData.current.time);
+  // weatherData.hourly.timeAdjusted = weatherData.hourly.time.map(toGmt);
+  // weatherData.daily.timeAdjusted = weatherData.daily.time.map(toGmt);
+  // weatherData.current.timeAdjusted = toGmt(weatherData.current.time);
 
   // fs.writeFileSync(
   //   `./src/pages/api/_backup_${new Date().toISOString()}.json`,
@@ -121,8 +124,9 @@ const getWeatherData = async () => {
   const params = {
     latitude: 59.33,
     longitude: 18.07,
-    current: "temperature_2m,weather_code,wind_speed_10m,wind_direction_10m",
-    hourly: "temperature_2m,precipitation,weather_code,rain",
+    current:
+      "temperature_2m,weather_code,precipitation,wind_speed_10m,wind_direction_10m",
+    hourly: "temperature_2m,weather_code,precipitation,",
     daily: "weather_code,temperature_2m_max,temperature_2m_min",
   };
   const url = "https://api.open-meteo.com/v1/forecast";
@@ -140,6 +144,7 @@ const mockWeatherData = () => {
 
 const mockWeatherData2 = () => {
   const weatherData: WeatherData = {
+    location: "Stockholm",
     current: {
       time: new Date().toISOString(),
       timeAdjusted: null,
@@ -157,7 +162,6 @@ const mockWeatherData2 = () => {
       ],
       temperature: [10, 12],
       precipitation: [10, 0],
-      rain: [10, 0],
     },
     daily: {
       time: [new Date().toISOString(), new Date().toISOString()],
@@ -175,5 +179,5 @@ const mockWeatherData2 = () => {
 
 // 59.3327° N, 18.0656° E
 export async function GET() {
-  return mockWeatherData();
+  return getWeatherData();
 }
