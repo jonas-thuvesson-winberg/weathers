@@ -50,10 +50,10 @@ export function sortDates(dates: string[]): string[] {
  * @param getDateString - A function that extracts the date string from an entry.
  * @returns A new array of date strings sorted by date and time.
  */
-export function sortByDates<T>(
+export const sortByDates = <T>(
   dates: T[],
   getDateString: (entry: T) => string
-): T[] {
+): T[] => {
   return dates
     .slice() // Create a shallow copy to avoid mutating the original array
     .sort(
@@ -61,4 +61,4 @@ export function sortByDates<T>(
         new Date(getDateString(a)).getTime() -
         new Date(getDateString(b)).getTime()
     );
-}
+};

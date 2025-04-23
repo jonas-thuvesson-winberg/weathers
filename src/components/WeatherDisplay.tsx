@@ -1,7 +1,7 @@
 import { createMemo, createSignal, For } from "solid-js";
 import type { WeatherData } from "../pages/api/weather";
 import { WeatherEntry } from "./WeatherEntry";
-import { sortByDates } from "../utils/date-utils";
+import { isThePast, sortByDates } from "../utils/date-utils";
 import { normalizeWeatherCodes } from "../utils/weather-codes";
 
 export const WeatherDisplay = (props: { weatherData: WeatherData }) => {
@@ -32,7 +32,7 @@ export const WeatherDisplay = (props: { weatherData: WeatherData }) => {
         symbol,
       ]);
     }
-    return sortByDates(out, (x) => x[0]);
+    return sortByDates(out, (x) => x[0]).filter(([d]) => !isThePast(d));
   });
 
   return (

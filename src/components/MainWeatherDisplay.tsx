@@ -34,7 +34,7 @@ export const MainWeatherDisplay = ({
             <div class="text-xl mx-10">
               Wind: {windSpeed.toFixed(2)} m/s, {Math.round(windDirection)}°
             </div>
-            {precipitation && (
+            {precipitation !== undefined && (
               <div class="text-xl mx-10">
                 Precip: {precipitation.toFixed(2)} mm
               </div>
