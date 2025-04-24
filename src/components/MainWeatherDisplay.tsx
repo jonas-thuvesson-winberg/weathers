@@ -13,19 +13,12 @@ export const MainWeatherDisplay = ({
       windDirection,
       precipitation,
     },
-    hourly: { weatherCode: hourlyWeatherCodes, time: hourlyTimes },
   },
 }: {
   weatherData: WeatherData;
 }) => {
-  const parsedWeatherCode = getUsableWeatherCode(
-    weatherCode,
-    time,
-    hourlyWeatherCodes,
-    hourlyTimes
-  );
   const { description: weatherDescription, symbol: weatherSymbol } =
-    parsedWeatherCode;
+    weatherCode;
   const toTitleCase = (str: string) => {
     return str.slice(0, 1).toUpperCase() + str.slice(1);
   };

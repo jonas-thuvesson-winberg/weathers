@@ -5,12 +5,12 @@ import node from "@astrojs/node";
 import solidJs from "@astrojs/solid-js";
 import svgr from "vite-plugin-svgr";
 
+import netlify from "@astrojs/netlify";
+
 // https://astro.build/config
 export default defineConfig({
   output: "server",
-  adapter: node({
-    mode: "standalone",
-  }),
+  adapter: netlify(),
 
   vite: {
     plugins: [

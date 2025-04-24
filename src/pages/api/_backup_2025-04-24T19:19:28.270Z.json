@@ -1,0 +1,877 @@
+{
+  "location": "Stockholm",
+  "current": {
+    "time": "2025-04-24T19:15:00.000Z",
+    "timeAdjusted": null,
+    "temperature": 8,
+    "weatherCode": {
+      "description": "Clouds generally forming or developing",
+      "symbol": "☁️"
+    },
+    "precipitation": 0,
+    "windSpeed": 8.640000343322754,
+    "windDirection": 150
+  },
+  "hourly": {
+    "time": [
+      "2025-04-24T00:00:00.000Z",
+      "2025-04-24T01:00:00.000Z",
+      "2025-04-24T02:00:00.000Z",
+      "2025-04-24T03:00:00.000Z",
+      "2025-04-24T04:00:00.000Z",
+      "2025-04-24T05:00:00.000Z",
+      "2025-04-24T06:00:00.000Z",
+      "2025-04-24T07:00:00.000Z",
+      "2025-04-24T08:00:00.000Z",
+      "2025-04-24T09:00:00.000Z",
+      "2025-04-24T10:00:00.000Z",
+      "2025-04-24T11:00:00.000Z",
+      "2025-04-24T12:00:00.000Z",
+      "2025-04-24T13:00:00.000Z",
+      "2025-04-24T14:00:00.000Z",
+      "2025-04-24T15:00:00.000Z",
+      "2025-04-24T16:00:00.000Z",
+      "2025-04-24T17:00:00.000Z",
+      "2025-04-24T18:00:00.000Z",
+      "2025-04-24T19:00:00.000Z",
+      "2025-04-24T20:00:00.000Z",
+      "2025-04-24T21:00:00.000Z",
+      "2025-04-24T22:00:00.000Z",
+      "2025-04-24T23:00:00.000Z",
+      "2025-04-25T00:00:00.000Z",
+      "2025-04-25T01:00:00.000Z",
+      "2025-04-25T02:00:00.000Z",
+      "2025-04-25T03:00:00.000Z",
+      "2025-04-25T04:00:00.000Z",
+      "2025-04-25T05:00:00.000Z",
+      "2025-04-25T06:00:00.000Z",
+      "2025-04-25T07:00:00.000Z",
+      "2025-04-25T08:00:00.000Z",
+      "2025-04-25T09:00:00.000Z",
+      "2025-04-25T10:00:00.000Z",
+      "2025-04-25T11:00:00.000Z",
+      "2025-04-25T12:00:00.000Z",
+      "2025-04-25T13:00:00.000Z",
+      "2025-04-25T14:00:00.000Z",
+      "2025-04-25T15:00:00.000Z",
+      "2025-04-25T16:00:00.000Z",
+      "2025-04-25T17:00:00.000Z",
+      "2025-04-25T18:00:00.000Z",
+      "2025-04-25T19:00:00.000Z",
+      "2025-04-25T20:00:00.000Z",
+      "2025-04-25T21:00:00.000Z",
+      "2025-04-25T22:00:00.000Z",
+      "2025-04-25T23:00:00.000Z",
+      "2025-04-26T00:00:00.000Z",
+      "2025-04-26T01:00:00.000Z",
+      "2025-04-26T02:00:00.000Z",
+      "2025-04-26T03:00:00.000Z",
+      "2025-04-26T04:00:00.000Z",
+      "2025-04-26T05:00:00.000Z",
+      "2025-04-26T06:00:00.000Z",
+      "2025-04-26T07:00:00.000Z",
+      "2025-04-26T08:00:00.000Z",
+      "2025-04-26T09:00:00.000Z",
+      "2025-04-26T10:00:00.000Z",
+      "2025-04-26T11:00:00.000Z",
+      "2025-04-26T12:00:00.000Z",
+      "2025-04-26T13:00:00.000Z",
+      "2025-04-26T14:00:00.000Z",
+      "2025-04-26T15:00:00.000Z",
+      "2025-04-26T16:00:00.000Z",
+      "2025-04-26T17:00:00.000Z",
+      "2025-04-26T18:00:00.000Z",
+      "2025-04-26T19:00:00.000Z",
+      "2025-04-26T20:00:00.000Z",
+      "2025-04-26T21:00:00.000Z",
+      "2025-04-26T22:00:00.000Z",
+      "2025-04-26T23:00:00.000Z",
+      "2025-04-27T00:00:00.000Z",
+      "2025-04-27T01:00:00.000Z",
+      "2025-04-27T02:00:00.000Z",
+      "2025-04-27T03:00:00.000Z",
+      "2025-04-27T04:00:00.000Z",
+      "2025-04-27T05:00:00.000Z",
+      "2025-04-27T06:00:00.000Z",
+      "2025-04-27T07:00:00.000Z",
+      "2025-04-27T08:00:00.000Z",
+      "2025-04-27T09:00:00.000Z",
+      "2025-04-27T10:00:00.000Z",
+      "2025-04-27T11:00:00.000Z",
+      "2025-04-27T12:00:00.000Z",
+      "2025-04-27T13:00:00.000Z",
+      "2025-04-27T14:00:00.000Z",
+      "2025-04-27T15:00:00.000Z",
+      "2025-04-27T16:00:00.000Z",
+      "2025-04-27T17:00:00.000Z",
+      "2025-04-27T18:00:00.000Z",
+      "2025-04-27T19:00:00.000Z",
+      "2025-04-27T20:00:00.000Z",
+      "2025-04-27T21:00:00.000Z",
+      "2025-04-27T22:00:00.000Z",
+      "2025-04-27T23:00:00.000Z",
+      "2025-04-28T00:00:00.000Z",
+      "2025-04-28T01:00:00.000Z",
+      "2025-04-28T02:00:00.000Z",
+      "2025-04-28T03:00:00.000Z",
+      "2025-04-28T04:00:00.000Z",
+      "2025-04-28T05:00:00.000Z",
+      "2025-04-28T06:00:00.000Z",
+      "2025-04-28T07:00:00.000Z",
+      "2025-04-28T08:00:00.000Z",
+      "2025-04-28T09:00:00.000Z",
+      "2025-04-28T10:00:00.000Z",
+      "2025-04-28T11:00:00.000Z",
+      "2025-04-28T12:00:00.000Z",
+      "2025-04-28T13:00:00.000Z",
+      "2025-04-28T14:00:00.000Z",
+      "2025-04-28T15:00:00.000Z",
+      "2025-04-28T16:00:00.000Z",
+      "2025-04-28T17:00:00.000Z",
+      "2025-04-28T18:00:00.000Z",
+      "2025-04-28T19:00:00.000Z",
+      "2025-04-28T20:00:00.000Z",
+      "2025-04-28T21:00:00.000Z",
+      "2025-04-28T22:00:00.000Z",
+      "2025-04-28T23:00:00.000Z",
+      "2025-04-29T00:00:00.000Z",
+      "2025-04-29T01:00:00.000Z",
+      "2025-04-29T02:00:00.000Z",
+      "2025-04-29T03:00:00.000Z",
+      "2025-04-29T04:00:00.000Z",
+      "2025-04-29T05:00:00.000Z",
+      "2025-04-29T06:00:00.000Z",
+      "2025-04-29T07:00:00.000Z",
+      "2025-04-29T08:00:00.000Z",
+      "2025-04-29T09:00:00.000Z",
+      "2025-04-29T10:00:00.000Z",
+      "2025-04-29T11:00:00.000Z",
+      "2025-04-29T12:00:00.000Z",
+      "2025-04-29T13:00:00.000Z",
+      "2025-04-29T14:00:00.000Z",
+      "2025-04-29T15:00:00.000Z",
+      "2025-04-29T16:00:00.000Z",
+      "2025-04-29T17:00:00.000Z",
+      "2025-04-29T18:00:00.000Z",
+      "2025-04-29T19:00:00.000Z",
+      "2025-04-29T20:00:00.000Z",
+      "2025-04-29T21:00:00.000Z",
+      "2025-04-29T22:00:00.000Z",
+      "2025-04-29T23:00:00.000Z",
+      "2025-04-30T00:00:00.000Z",
+      "2025-04-30T01:00:00.000Z",
+      "2025-04-30T02:00:00.000Z",
+      "2025-04-30T03:00:00.000Z",
+      "2025-04-30T04:00:00.000Z",
+      "2025-04-30T05:00:00.000Z",
+      "2025-04-30T06:00:00.000Z",
+      "2025-04-30T07:00:00.000Z",
+      "2025-04-30T08:00:00.000Z",
+      "2025-04-30T09:00:00.000Z",
+      "2025-04-30T10:00:00.000Z",
+      "2025-04-30T11:00:00.000Z",
+      "2025-04-30T12:00:00.000Z",
+      "2025-04-30T13:00:00.000Z",
+      "2025-04-30T14:00:00.000Z",
+      "2025-04-30T15:00:00.000Z",
+      "2025-04-30T16:00:00.000Z",
+      "2025-04-30T17:00:00.000Z",
+      "2025-04-30T18:00:00.000Z",
+      "2025-04-30T19:00:00.000Z",
+      "2025-04-30T20:00:00.000Z",
+      "2025-04-30T21:00:00.000Z",
+      "2025-04-30T22:00:00.000Z",
+      "2025-04-30T23:00:00.000Z"
+    ],
+    "weatherCodes": [
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      { "description": "Drizzle, continuous, moderate", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Cloud development not observed or not observable",
+        "symbol": "☀️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      { "description": "Drizzle, continuous, moderate", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, moderate", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, moderate", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, moderate", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, moderate", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, moderate", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      },
+      {
+        "description": "Clouds generally dissolving or becoming less developed",
+        "symbol": "🌥️"
+      }
+    ],
+    "temperature": [
+      5.80649995803833, 5.406499862670898, 4.856499671936035, 4.05649995803833,
+      3.506500005722046, 3.55649995803833, 4.7064995765686035,
+      6.156499862670898, 7.256499767303467, 7.9564995765686035,
+      8.256500244140625, 8.706500053405762, 9.606500625610352,
+      10.056500434875488, 10.556500434875488, 10.306500434875488,
+      10.106500625610352, 9.506500244140625, 8.806500434875488,
+      8.156499862670898, 7.606499671936035, 7.356499671936035,
+      5.7064995765686035, 5.2064995765686035, 5.05649995803833,
+      4.606499671936035, 3.9065001010894775, 3.55649995803833,
+      2.9065001010894775, 3.4065001010894775, 4.406499862670898,
+      5.30649995803833, 6.256499767303467, 7.30649995803833, 8.256500244140625,
+      8.906499862670898, 9.656499862670898, 9.956500053405762,
+      9.906499862670898, 9.706500053405762, 9.306500434875488,
+      8.506500244140625, 7.656499862670898, 6.256499767303467,
+      5.656499862670898, 5.156499862670898, 4.9564995765686035,
+      4.7064995765686035, 4.756499767303467, 4.856499671936035,
+      4.606499671936035, 4.506499767303467, 4.506499767303467,
+      4.756499767303467, 5.7064995765686035, 6.80649995803833,
+      8.106500625610352, 9.406499862670898, 10.306500434875488,
+      10.906499862670898, 11.056500434875488, 10.806500434875488,
+      10.156499862670898, 9.656499862670898, 9.056500434875488,
+      8.156499862670898, 7.2064995765686035, 6.2064995765686035,
+      2.799999952316284, 2.049999952316284, 1.5499999523162842, 1.25,
+      1.0499999523162842, 0.8999999761581421, 0.8500000238418579,
+      1.2999999523162842, 2.5, 4.199999809265137, 5.849999904632568,
+      7.400000095367432, 8.949999809265137, 10.25, 11.300000190734863,
+      12.149999618530273, 12.550000190734863, 12.350000381469727,
+      11.800000190734863, 11.350000381469727, 11.449999809265137,
+      11.649999618530273, 11.5, 10.699999809265137, 9.5, 8.600000381469727,
+      8.25, 8.149999618530273, 8, 7.699999809265137, 7.300000190734863,
+      7.150000095367432, 7.400000095367432, 7.849999904632568, 8.25,
+      8.449999809265137, 8.600000381469727, 9.050000190734863,
+      10.149999618530273, 11.550000190734863, 12.800000190734863,
+      13.850000381469727, 14.699999809265137, 15.050000190734863, 14.75, 14,
+      13.100000381469727, 12.199999809265137, 11.25, 10.300000190734863, 9.5,
+      8.800000190734863, 8.199999809265137, 7.800000190734863, 7.5,
+      7.599999904632568, 8.25, 9.25, 10.25, 11.25, 12.300000190734863,
+      12.949999809265137, 13.050000190734863, 12.850000381469727,
+      12.649999618530273, 12.899999618530273, 13.149999618530273,
+      12.949999809265137, 11.899999618530273, 10.350000381469727,
+      8.850000381469727, 7.550000190734863, 6.25, 5.25, 4.650000095367432,
+      4.300000190734863, 4, 3.700000047683716, 3.450000047683716,
+      3.4000000953674316, 3.700000047683716, 4.199999809265137,
+      4.949999809265137, 6.150000095367432, 7.550000190734863, 8.75,
+      9.699999809265137, 10.399999618530273, 10.649999618530273,
+      10.350000381469727, 9.649999618530273, 8.800000190734863,
+      7.949999809265137, 7, 6.150000095367432, 5.599999904632568,
+      5.150000095367432, 4.800000190734863, 4.650000095367432, 4.599999904632568
+    ],
+    "precipitation": [
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5,
+      0.20000000298023224, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5, 0.699999988079071, 0.699999988079071,
+      0.699999988079071, 0.10000000149011612, 0.10000000149011612,
+      0.10000000149011612, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0.10000000149011612, 0.10000000149011612, 0.10000000149011612,
+      0.10000000149011612, 0.10000000149011612, 0.10000000149011612,
+      0.20000000298023224, 0.20000000298023224, 0.20000000298023224, 0, 0, 0, 0,
+      0, 0, 0.10000000149011612, 0.10000000149011612, 0.10000000149011612,
+      0.30000001192092896, 0.30000001192092896, 0.30000001192092896, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    ]
+  },
+  "daily": {
+    "time": [
+      "2025-04-24T00:00:00.000Z",
+      "2025-04-25T00:00:00.000Z",
+      "2025-04-26T00:00:00.000Z",
+      "2025-04-27T00:00:00.000Z",
+      "2025-04-28T00:00:00.000Z",
+      "2025-04-29T00:00:00.000Z",
+      "2025-04-30T00:00:00.000Z"
+    ],
+    "weatherCodes": [
+      { "description": "Drizzle, continuous, moderate", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      {
+        "description": "Clouds generally forming or developing",
+        "symbol": "☁️"
+      },
+      { "description": "Drizzle, continuous, moderate", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" },
+      { "description": "Drizzle, continuous, slight", "symbol": "🌧️" }
+    ],
+    "temperatureMax": [
+      10.556500434875488, 9.956500053405762, 11.056500434875488,
+      12.550000190734863, 15.050000190734863, 13.149999618530273,
+      10.649999618530273
+    ],
+    "temperatureMin": [
+      3.506500005722046, 2.9065001010894775, 1.25, 0.8500000238418579,
+      7.150000095367432, 4.300000190734863, 3.4000000953674316
+    ]
+  }
+}

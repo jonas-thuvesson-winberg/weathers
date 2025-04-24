@@ -7,15 +7,14 @@ import { normalizeWeatherCodes } from "../utils/weather-codes";
 export const WeatherDisplay = (props: { weatherData: WeatherData }) => {
   const [data, setData] = createSignal(props);
   const weatherTableData = createMemo(() => {
-    let {
+    const {
       weatherData: {
-        hourly: { temperature, time, weatherCode, precipitation },
+        hourly: { temperature, time, weatherCodes: weatherCode, precipitation },
       },
     } = data();
 
     let out: [string, number, number, string, string][] = [];
 
-    weatherCode = normalizeWeatherCodes(weatherCode);
     // Is supposed to be array, but API I'm using is stupid
     const tempLength = Array.isArray(temperature)
       ? temperature.length

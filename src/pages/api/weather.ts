@@ -1,5 +1,9 @@
 // // @ts-nocheck
-import { wmo4677WithSymbols } from "../../utils/weather-codes";
+import {
+  getUsableWeatherCode,
+  normalizeWeatherCodes,
+  wmo4677WithSymbols,
+} from "../../utils/weather-codes";
 import { fetchWeatherApi } from "openmeteo";
 import { WeatherApiResponse } from "@openmeteo/sdk/weather-api-response";
 import { DateTime } from "luxon";
@@ -19,14 +23,14 @@ export interface WeatherData {
   };
   hourly: {
     time: string[];
-    weatherCode: { description: string; symbol: string }[];
+    weatherCodes: { description: string; symbol: string }[];
     temperature: number[];
     precipitation: number[];
     timeAdjusted?: string[];
   };
   daily: {
     time: string[];
-    weatherCode: { description: string; symbol: string }[];
+    weatherCodes: { description: string; symbol: string }[];
     timeAdjusted?: string[];
     temperatureMax?: number[];
     temperatureMin?: number[];
@@ -70,11 +74,11 @@ const mapResponses = (responses: WeatherApiResponse[]) => {
   // Note: The order of weather variables in the URL query and the indices below need to match!
   const weatherData: WeatherData = {
     // TODO: Make location dynamic
-    location: 'Stockholm',
+    location: "Stockholm",
     current: {
       time: new Date(
         adjustTime(Number(current.time()), utcOffsetSeconds)
-      ).toString(),
+      ).toISOString(),
       timeAdjusted: null as string | null,
       temperature: current.variables(0)!.value(), // Current is only 1 value, therefore `.value()`
       weatherCode: toWeatherDescription(current.variables(1)!.value()),
@@ -87,9 +91,11 @@ const mapResponses = (responses: WeatherApiResponse[]) => {
         Number(hourly.time()),
         Number(hourly.timeEnd()),
         hourly.interval()
-      ).map((t) => adjustTime(t, utcOffsetSeconds).toString()),
-      weatherCode: Array.from(hourly.variables(1)!.valuesArray()!).map((n) =>
-        toWeatherDescription(n)
+      ).map((t) => adjustTime(t, utcOffsetSeconds).toISOString()),
+      weatherCodes: normalizeWeatherCodes(
+        Array.from(hourly.variables(1)!.valuesArray()!).map((n) =>
+          toWeatherDescription(n)
+        )
       ),
       temperature: Array.from(hourly.variables(0)!.valuesArray()!), // `.valuesArray()` get an array of floats
       precipitation: Array.from(hourly.variables(2)!.valuesArray()!),
@@ -99,18 +105,21 @@ const mapResponses = (responses: WeatherApiResponse[]) => {
         Number(daily.time()),
         Number(daily.timeEnd()),
         daily.interval()
-      ).map((t) => adjustTime(t, utcOffsetSeconds).toString()),
-      weatherCode: Array.from(daily.variables(0)!.valuesArray()!).map(
-        toWeatherDescription
+      ).map((t) => adjustTime(t, utcOffsetSeconds).toISOString()),
+      weatherCodes: normalizeWeatherCodes(
+        Array.from(daily.variables(0)!.valuesArray()!).map(toWeatherDescription)
       ),
       temperatureMax: Array.from(daily.variables(1)!.valuesArray()!),
       temperatureMin: Array.from(daily.variables(2)!.valuesArray()!),
     },
   };
 
-  // weatherData.hourly.timeAdjusted = weatherData.hourly.time.map(toGmt);
-  // weatherData.daily.timeAdjusted = weatherData.daily.time.map(toGmt);
-  // weatherData.current.timeAdjusted = toGmt(weatherData.current.time);
+  weatherData.current.weatherCode = getUsableWeatherCode(
+    weatherData.current.weatherCode,
+    weatherData.current.time,
+    weatherData.hourly.weatherCodes,
+    weatherData.hourly.time
+  );
 
   // fs.writeFileSync(
   //   `./src/pages/api/_backup_${new Date().toISOString()}.json`,
@@ -156,7 +165,7 @@ const mockWeatherData2 = () => {
     hourly: {
       time: [new Date().toISOString(), new Date().toISOString()],
       timeAdjusted: ["2025-04-19T19:43:04+02:00", "2025-04-20T21:00:04+02:00"],
-      weatherCode: [
+      weatherCodes: [
         { description: "Clear", symbol: "☀️" },
         { description: "Partly cloudy", symbol: "🌤️" },
       ],
@@ -166,7 +175,7 @@ const mockWeatherData2 = () => {
     daily: {
       time: [new Date().toISOString(), new Date().toISOString()],
       timeAdjusted: ["2025-04-19T19:43:04+02:00", "2025-04-20T21:00:04+02:00"],
-      weatherCode: [
+      weatherCodes: [
         { description: "Clear", symbol: "☀️" },
         { description: "Partly cloudy", symbol: "🌤️" },
       ],
@@ -179,5 +188,5 @@ const mockWeatherData2 = () => {
 
 // 59.3327° N, 18.0656° E
 export async function GET() {
-  return getWeatherData();
+  return mockWeatherData();
 }
