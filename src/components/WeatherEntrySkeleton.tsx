@@ -32,11 +32,7 @@ export const WeatherEntrySkeleton = () => {
         <div
           class={`flex justify-end pr-2 pb-2 border-b-1 ${chevronContainerClasses()}`}
         >
-          <ChevronToggle
-            handleClick={handleClick}
-            initialOpen={open()}
-            duration={0.3}
-          />
+          <FaSolidChevronDown />
         </div>
         <Presence>
           {open() && (
