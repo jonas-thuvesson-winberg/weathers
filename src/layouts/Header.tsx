@@ -1,4 +1,5 @@
 import { For } from "solid-js";
+import logo from "../assets/logo.png";
 
 export const Header = () => {
   const links: [string, string][] = [
@@ -9,7 +10,10 @@ export const Header = () => {
   return (
     <header class="flex flex-row justify-between items-center w-full h-[80px] px-2 md:px-10 lg:px-20 bg-white">
       {" "}
-      <h1 class="px-4 text-2xl">Weathers</h1>{" "}
+      <div class="flex flex-row items-center">
+        <img src={logo.src} alt="Logo" class="h-15 w-15" />
+        <h1 class="px-4 text-2xl">Weathers</h1>{" "}
+      </div>
       <div>
         <ul>
           <For each={links}>
