@@ -330,3 +330,41 @@ export const normalizeWeatherCodes = (
   }
   return tempArr;
 };
+
+const zip = <T, U>(a: T[], b: U[]): [T, U][] => {
+  const length = Math.min(a.length, b.length);
+  const result: [T, U][] = [];
+  for (let i = 0; i < length; i++) {
+    result.push([a[i], b[i]]);
+  }
+  return result;
+};
+
+export const getUsableWeatherCode = (
+  weatherCode: { description: string; symbol: string },
+  timeStamp: string,
+  weatherCodes: { description: string; symbol: string }[],
+  timeStamps: string[]
+): { description: string; symbol: string } => {
+  if (
+    weatherCode.description.toLowerCase().trim() !==
+    "state of sky on the whole unchanged"
+  ) {
+    return weatherCode;
+  }
+
+  return getPreviousUsableWeatherCode(timeStamp, weatherCodes, timeStamps);
+};
+
+export const getPreviousUsableWeatherCode = (
+  timeStamp: string,
+  weatherCodes: { description: string; symbol: string }[],
+  timeStamps: string[]
+): { description: string; symbol: string } => {
+  const normalized = normalizeWeatherCodes(weatherCodes);
+  const zipped = zip(timeStamps, normalized);
+  const filtered = zipped.filter(
+    ([time]) => new Date(time) < new Date(timeStamp)
+  );
+  return filtered[filtered.length - 1][1];
+};

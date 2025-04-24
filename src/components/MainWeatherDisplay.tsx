@@ -1,5 +1,6 @@
 import type { WeatherData } from "../pages/api/weather";
 import { getDateTimeDescriptive } from "../utils/date-utils";
+import { getUsableWeatherCode } from "../utils/weather-codes";
 
 export const MainWeatherDisplay = ({
   weatherData: {
@@ -7,15 +8,24 @@ export const MainWeatherDisplay = ({
     current: {
       time,
       temperature,
-      weatherCode: { symbol: weatherSymbol, description: weatherDescription },
+      weatherCode,
       windSpeed,
       windDirection,
       precipitation,
     },
+    hourly: { weatherCode: hourlyWeatherCodes, time: hourlyTimes },
   },
 }: {
   weatherData: WeatherData;
 }) => {
+  const parsedWeatherCode = getUsableWeatherCode(
+    weatherCode,
+    time,
+    hourlyWeatherCodes,
+    hourlyTimes
+  );
+  const { description: weatherDescription, symbol: weatherSymbol } =
+    parsedWeatherCode;
   const toTitleCase = (str: string) => {
     return str.slice(0, 1).toUpperCase() + str.slice(1);
   };
