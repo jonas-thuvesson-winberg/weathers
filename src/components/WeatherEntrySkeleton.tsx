@@ -1,12 +1,6 @@
-import { FaSolidChevronDown, FaSolidChevronUp } from "solid-icons/fa";
+import { FaSolidChevronDown } from "solid-icons/fa";
 import { createMemo, createSignal } from "solid-js";
 import { Motion, Presence } from "solid-motionone";
-import { ChevronToggle } from "./ChevronToggle";
-import {
-  getDateDescriptive,
-  getDateTimeDescriptive,
-  getTime,
-} from "../utils/date-utils";
 
 export const WeatherEntrySkeleton = () => {
   const [open, setOpen] = createSignal(false);

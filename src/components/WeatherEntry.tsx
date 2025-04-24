@@ -1,12 +1,7 @@
-import { FaSolidChevronDown, FaSolidChevronUp } from "solid-icons/fa";
 import { createMemo, createSignal } from "solid-js";
 import { Motion, Presence } from "solid-motionone";
 import { ChevronToggle } from "./ChevronToggle";
-import {
-  getDateDescriptive,
-  getDateTimeDescriptive,
-  getTime,
-} from "../utils/date-utils";
+import { getDateDescriptive, getTime } from "../utils/date-utils";
 
 export const WeatherEntry = (props: {
   time: string;
@@ -72,13 +67,13 @@ export const WeatherEntry = (props: {
               class="flex flex-row items-start justify-between w-full h-full px-2 pt-4"
             >
               <div>
-                <div class="text-lg weather-time">{getTime(time)}</div>
+                <div class="text-lg weather-time font-semibold">{getTime(time)}</div>
                 <div class="weather-date">{getDateDescriptive(time)}</div>
                 <div class="weather-temperature">{temperature.toFixed(1)}°</div>
                 <div class="weather-precipitation">
                   {precipitation.toFixed(2)} mm
                 </div>
-                <div class="weather-description">{description}</div>
+                {/* <div class="weather-description">{description}</div> */}
               </div>
               <div class="text-3xl weather-symbol">{symbol}</div>
             </Motion.div>
