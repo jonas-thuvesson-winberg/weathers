@@ -1,9 +1,9 @@
 import { For } from "solid-js";
 
 export const Header = () => {
-  const links = [
+  const links: [string, string][] = [
     ["Home", "/"],
-    ["About", "/about"],
+    // ["About", "/about"],
   ];
 
   return (
