@@ -18,7 +18,7 @@ import { Footer } from "./Footer";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <title>Astro Basics</title>
+    <title>Weathers - simpler weather</title>
   </head>
   <body class="min-h-screen flex flex-col justify-between">
     <div class="header-container">
@@ -31,7 +31,7 @@ import { Footer } from "./Footer";
 
     <div
       id="loading"
-      class="hidden fixed flex justify-center items-center bottom-0 left-0 right-0 top-0 text-white text-center p-4 opacity-80"
+      class="hidden fixed justify-center items-center bottom-0 left-0 right-0 top-0 text-white text-center p-4 opacity-80"
     >
       <div
         class="bg-gray-900 bg-opacity-50 w-[100px] h-[100px] absolute flex justify-center items-center rounded-lg"
@@ -61,13 +61,13 @@ import { Footer } from "./Footer";
 <script is:inline>
   document.addEventListener("astro:before-preparation", () => {
     const loading = document.getElementById("loading");
-    loading.classList.add("block");
+    loading.classList.add("flex");
     loading.classList.remove("hidden");
   });
 
   document.addEventListener("astro:after-preparation", () => {
     const loading = document.getElementById("loading");
     loading.classList.add("hidden");
-    loading.classList.remove("block");
+    loading.classList.remove("flex");
   });
 </script>
