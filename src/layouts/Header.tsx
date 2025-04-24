@@ -11,7 +11,7 @@ export const Header = () => {
     <header class="flex flex-row justify-between items-center w-full h-[80px] px-2 md:px-10 lg:px-20 bg-white">
       {" "}
       <div class="flex flex-row items-center">
-        <img src={logo.src} alt="Logo" class="h-15 w-15" />
+        <img src={logo.src} alt="Logo" class="logo h-15 w-15" />
         <h1 class="px-4 text-2xl">Weathers</h1>{" "}
       </div>
       <div>

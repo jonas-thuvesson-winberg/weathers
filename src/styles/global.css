@@ -25,3 +25,8 @@ html {
 [data-is-top="false"][data-is-scrolling-up="true"] .main {
   margin-top: 80px;
 }
+
+[data-is-top="false"][data-is-scrolling-up="true"] .logo {
+  width: 40px !important;
+  height: 40px !important;
+}
