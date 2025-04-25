@@ -15,9 +15,10 @@ html {
   position: fixed;
 }
 
-[data-is-top="false"][data-is-scrolling-up="true"] .header-container > Header {
-  transition: height 0.1s;
+[data-is-top="false"][data-is-scrolling-up="true"] .header {
   height: 50px;
+  z-index: 1000;
+  transition: height 0.1s;
   border-bottom: 1px solid #eaeaea;
   box-shadow: 0px -1px 5px 1px rgba(150, 150, 150, 0.75);
 }

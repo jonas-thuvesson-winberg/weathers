@@ -22,7 +22,7 @@ import { Footer } from "./Footer";
   </head>
   <body class="min-h-screen flex flex-col justify-between">
     <div class="header-container">
-      <Header />
+      <Header client:only="solid-js" />
     </div>
     <div class="main p-5 flex-1">
       <slot />
