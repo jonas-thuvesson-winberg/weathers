@@ -225,6 +225,6 @@ export async function GET({ request }: { request: Request }) {
   const url = new URL(request.url);
   const searchParams = url.searchParams;
   const location = searchParams.get("location");
-  return mockWeatherData();
-  // return getWeatherData(location);
+  //return mockWeatherData();
+  return getWeatherData(location);
 }
