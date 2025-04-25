@@ -1,6 +1,7 @@
 ---
 import { FaSolidChevronUp } from "solid-icons/fa";
 import logo from "../assets/logo.png";
+import ScrollToTop from "../components/ScrollToTop";
 
 const links: [string, string][] = [
   //   ["Home", "/"],
@@ -26,19 +27,20 @@ const links: [string, string][] = [
         ))
       }
     </ul>
-    <div>
+    <ScrollToTop client:only="solid-js" />
+    <!-- <div>
       <FaSolidChevronUp class="hover:cursor-pointer" id="scroll-to-top" />
-    </div>
+    </div> -->
   </div>
 </header>
 
 <script>
-  const button = document.getElementById("scroll-to-top");
+  // const button = document.getElementById("scroll-to-top");
 
-  button!.addEventListener("click", () => {
-    console.log("Button clicked!");
-    document
-      .querySelector("body")!
-      .scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  // button!.addEventListener("click", () => {
+  //   console.log("Button clicked!");
+  //   document
+  //     .querySelector("body")!
+  //     .scrollIntoView({ behavior: "smooth", block: "start" });
+  // });
 </script>
