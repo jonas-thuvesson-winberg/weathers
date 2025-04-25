@@ -48,7 +48,7 @@ export const MainWeatherDisplay = ({
           />
         </div>
         <div class="py-7 w-full xl:w-2xl weather-entry flex flex-col ">
-          <div class="flex flex-col items-center justify-center">
+          <div class="flex flex-col items-center justify-center break-all xs:break-normal text-center ">
             <h3 class="text-5xl font-bold">{toTitleCase(location)}</h3>
             <div class="flex gap-4 flex-row mb-2 mx-10">
               <h3 class="text-5xl font-bold">{temperature.toFixed(1)}°</h3>

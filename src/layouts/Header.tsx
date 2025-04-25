@@ -15,7 +15,7 @@ export const Header = () => {
   };
 
   return (
-    <header class="header flex flex-row justify-between items-center w-full h-[80px] px-2 md:px-10 lg:px-20 bg-white">
+    <header class="header flex flex-row justify-between items-center w-full h-[80px] px-3 xs:px-9 lg:px-27 xl:px-36 bg-white">
       {" "}
       <div class="flex flex-row items-center">
         <img src={logo.src} alt="Logo" class="logo h-15 w-15" />
