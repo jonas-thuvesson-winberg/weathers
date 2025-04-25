@@ -9,6 +9,8 @@ import { WeatherApiResponse } from "@openmeteo/sdk/weather-api-response";
 import { DateTime } from "luxon";
 import { mockWeatherData as mockData } from "../../utils/mock-weather-data";
 import * as fs from "node:fs";
+import NodeGeocoder, { type Options } from "node-geocoder";
+import { default as nodeFetch } from "node-fetch";
 
 export interface WeatherData {
   location: string;
@@ -57,7 +59,10 @@ const toWeatherDescription = (
   return wmo4677WithSymbols[Number(code)];
 };
 
-const mapResponses = (responses: WeatherApiResponse[]) => {
+const mapResponses = async (
+  responses: WeatherApiResponse[],
+  geocoder: NodeGeocoder.Geocoder
+) => {
   const response = responses![0];
 
   // Attributes for timezone and location
@@ -66,6 +71,7 @@ const mapResponses = (responses: WeatherApiResponse[]) => {
   const timezoneAbbreviation = response.timezoneAbbreviation();
   const latitude = response.latitude();
   const longitude = response.longitude();
+  const r = await geocoder.reverse({ lat: latitude, lon: longitude });
 
   const current = response.current()!;
   const hourly = response.hourly()!;
@@ -74,7 +80,7 @@ const mapResponses = (responses: WeatherApiResponse[]) => {
   // Note: The order of weather variables in the URL query and the indices below need to match!
   const weatherData: WeatherData = {
     // TODO: Make location dynamic
-    location: "Stockholm",
+    location: r[0].city!,
     current: {
       time: new Date(
         adjustTime(Number(current.time()), utcOffsetSeconds)
@@ -129,10 +135,38 @@ const mapResponses = (responses: WeatherApiResponse[]) => {
   return new Response(JSON.stringify(weatherData));
 };
 
-const getWeatherData = async () => {
+const getWeatherData = async (location: string | null) => {
+  const options: Options = {
+    provider: "openstreetmap",
+    // Optional depending on your needs
+    // httpAdapter: 'https', // Default
+    // formatter: null, // 'gpx', 'string', ...
+    // Set custom headers to comply with OSM usage policy
+    // @ts-ignore
+    fetch: async function (url: globalThis.RequestInfo, init?: RequestInit) {
+      const headers = {
+        ...init?.headers,
+        "User-Agent": "Weathers/0.1 (jonasthuvesson@gmail.com)",
+      };
+
+      // TODO: A bit hacky... maybe look into a better way
+      return (await nodeFetch(url.toString(), {
+        ...init,
+        headers,
+        body:
+          init?.body instanceof ArrayBuffer
+            ? Buffer.from(init.body)
+            : (init?.body as any),
+      })) as unknown as Response;
+    },
+  };
+
+  const geocoder = NodeGeocoder(options);
+  const r = await geocoder.geocode(location || "Stockholm");
+
   const params = {
-    latitude: 59.33,
-    longitude: 18.07,
+    latitude: r[0].latitude,
+    longitude: r[0].longitude,
     current:
       "temperature_2m,weather_code,precipitation,wind_speed_10m,wind_direction_10m",
     hourly: "temperature_2m,weather_code,precipitation,",
@@ -140,7 +174,7 @@ const getWeatherData = async () => {
   };
   const url = "https://api.open-meteo.com/v1/forecast";
   const response = await fetchWeatherApi(url, params);
-  return mapResponses(response);
+  return mapResponses(response, geocoder);
 };
 
 const mockWeatherData = () => {
@@ -187,6 +221,9 @@ const mockWeatherData2 = () => {
 };
 
 // 59.3327° N, 18.0656° E
-export async function GET() {
-  return getWeatherData();
+export async function GET({ request }: { request: Request }) {
+  const url = new URL(request.url);
+  const searchParams = url.searchParams;
+  const location = searchParams.get("location");
+  return getWeatherData(location);
 }

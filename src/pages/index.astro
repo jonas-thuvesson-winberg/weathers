@@ -4,9 +4,10 @@ import { WeatherDisplay } from "../components/WeatherDisplay";
 import { WeatherDisplaySkeleton } from "../components/WeatherDisplaySkeleton";
 import Layout from "../layouts/Layout.astro";
 
-const res = await fetch(`${Astro.url.origin}/api/weather`).then(
-  async (r) => await r.json()
-);
+const location = Astro.url.searchParams.get("location") || "Stockholm";
+const res = await fetch(
+  `${Astro.url.origin}/api/weather?location=${location}`
+).then(async (r) => await r.json());
 // console.log("RESPONSE: ", res);
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
