@@ -1,0 +1,65 @@
+---
+import type { WeatherData } from "../pages/api/weather";
+// import { WeatherEntry } from "./WeatherEntry";
+import WeatherEntry from "./WeatherEntry.astro";
+import { isThePast, sortByDates } from "../utils/date-utils";
+import { WeatherEntryClient } from "./WeatherEntryClient";
+import WeatherEntryBody from "./WeatherEntryBody.astro";
+
+const data = Astro.props as { weatherData: WeatherData };
+const weatherTableData = () => {
+  const {
+    weatherData: {
+      hourly: { temperature, time, weatherCodes: weatherCode, precipitation },
+    },
+  } = data;
+
+  let out: [string, number, number, string, string][] = [];
+
+  // Is supposed to be array, but API I'm using is stupid
+  const tempLength = Array.isArray(temperature)
+    ? temperature.length
+    : Object.values(temperature).length;
+
+  for (let i = 0; i < tempLength; i++) {
+    let { description, symbol } = weatherCode[i];
+
+    out.push([
+      new Date(time[i]).toString(),
+      Math.floor(Number(temperature[i])),
+      precipitation[i],
+      description,
+      symbol,
+    ]);
+  }
+  return sortByDates(out, (x) => x[0]).filter(([d]) => !isThePast(d));
+};
+---
+
+<div class="flex flex-col pt-5">
+  {
+    weatherTableData().map((item) => (
+      <div class="flex flex-col w-full items-center">
+        <div class="pt-4 w-full max-w-2xl xl:max-w-3xl flex flex-wrap flex-col">
+          <WeatherEntryClient client:only="solid-js">
+            <WeatherEntryBody
+              time={item[0]}
+              temperature={item[1]}
+              precipitation={item[2]}
+              description={item[3]}
+              symbol={item[4]}
+            />
+            <WeatherEntry
+              slot="fallback"
+              time={item[0]}
+              temperature={item[1]}
+              precipitation={item[2]}
+              description={item[3]}
+              symbol={item[4]}
+            />
+          </WeatherEntryClient>
+        </div>
+      </div>
+    ))
+  }
+</div>

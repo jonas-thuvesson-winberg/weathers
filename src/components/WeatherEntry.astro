@@ -1,0 +1,21 @@
+---
+import WeatherEntryBody from "./WeatherEntryBody.astro";
+
+const { time, temperature, precipitation, symbol, description } =
+  Astro.props as {
+    time: string;
+    temperature: number;
+    precipitation: number;
+    description: string;
+    symbol: string;
+  };
+---
+
+<div class={`flex justify-end pr-2 pb-2 border-b-1 border-gray-300`}></div>
+<WeatherEntryBody
+  time={time}
+  temperature={temperature}
+  precipitation={precipitation}
+  description={description}
+  symbol={symbol}
+/>

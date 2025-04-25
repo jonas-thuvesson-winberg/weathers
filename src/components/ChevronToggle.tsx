@@ -5,10 +5,12 @@ import { FaSolidChevronUp } from "solid-icons/fa";
 export const ChevronToggle = ({
   initialOpen,
   duration,
+  size,
   handleClick,
 }: {
   initialOpen: boolean;
   duration: number;
+  size: string;
   handleClick: (evt: Event) => void;
 }) => {
   const [open, setOpen] = createSignal(initialOpen);
@@ -27,7 +29,7 @@ export const ChevronToggle = ({
       class="inline"
       onClick={(e) => handleClickInternal(e)}
     >
-      <FaSolidChevronUp class="hover:cursor-pointer" />
+      <FaSolidChevronUp size={size} class="hover:cursor-pointer" />
     </Motion.div>
   );
 };

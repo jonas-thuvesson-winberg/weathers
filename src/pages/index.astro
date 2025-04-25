@@ -1,27 +1,15 @@
 ---
-// import { MainWeatherDisplay } from "../components/MainWeatherDisplay";
 import MainWeatherDisplay from "../components/MainWeatherDisplay.astro";
-import { WeatherDisplay } from "../components/WeatherDisplay";
-import { WeatherDisplaySkeleton } from "../components/WeatherDisplaySkeleton";
+import WeatherDisplay from "../components/WeatherDisplay.astro";
 import Layout from "../layouts/Layout.astro";
 
 const location = Astro.url.searchParams.get("location") || "Stockholm";
 const res = await fetch(
   `${Astro.url.origin}/api/weather?location=${location}`
 ).then(async (r) => await r.json());
-// console.log("RESPONSE: ", res);
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
 <Layout>
-  <!-- <h1>HELLO!</h1> -->
-  <!-- <MainWeatherDisplay weatherData={res} client:only="solid-js" /> -->
   <MainWeatherDisplay weatherData={res} />
-  <WeatherDisplay weatherData={res} client:only="solid-js">
-    <div slot="fallback">
-      <WeatherDisplaySkeleton />
-    </div>
-  </WeatherDisplay>
+  <WeatherDisplay weatherData={res} />
 </Layout>
