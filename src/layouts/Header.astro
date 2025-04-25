@@ -1,0 +1,44 @@
+---
+import { FaSolidChevronUp } from "solid-icons/fa";
+import logo from "../assets/logo.png";
+
+const links: [string, string][] = [
+  //   ["Home", "/"],
+  //   ["About", "/about"],
+];
+---
+
+<header
+  class="header flex flex-row justify-between items-center w-full h-[80px] px-3 xs:px-9 lg:px-27 xl:px-36 bg-white"
+>
+  {" "}
+  <div class="flex flex-row items-center">
+    <img src={logo.src} alt="Logo" class="logo h-15 w-15" />
+    <h1 class="px-4 text-2xl">Weathers</h1>{" "}
+  </div>
+  <div>
+    <ul>
+      {
+        links.map((item) => (
+          <a class="px-4 hover:underline" href={item[1]}>
+            {item[0]}
+          </a>
+        ))
+      }
+    </ul>
+    <div>
+      <FaSolidChevronUp class="hover:cursor-pointer" id="scroll-to-top" />
+    </div>
+  </div>
+</header>
+
+<script>
+  const button = document.getElementById("scroll-to-top");
+
+  button!.addEventListener("click", () => {
+    console.log("Button clicked!");
+    document
+      .querySelector("body")!
+      .scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+</script>
