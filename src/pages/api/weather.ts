@@ -1,4 +1,5 @@
-// // @ts-nocheck
+export const prerender = false;
+
 import {
   getUsableWeatherCode,
   normalizeWeatherCodes,
