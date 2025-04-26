@@ -11,7 +11,6 @@ const LocationInput = (
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
     params.set("location", location);
-    console.log("params", params);
     window.history.replaceState({}, "", `${url.pathname}?${params.toString()}`);
   };
 
@@ -23,13 +22,10 @@ const LocationInput = (
 
   const handleSend = () => {
     if (LoadingUtils.isLoading()) return;
-    console.log("Update with location:", locationModel());
     refresh();
   };
 
   const handleEnter = (e: Event) => {
-    // e.preventDefault();
-    // e.stopPropagation();
     const keyEvent = e as KeyboardEvent;
     if (keyEvent.key !== "Enter") return;
 
@@ -37,15 +33,12 @@ const LocationInput = (
   };
 
   const handleClickSend = (e: Event) => {
-    console.log("Button clicked");
-
     e.preventDefault();
     e.stopPropagation();
     handleSend();
   };
 
   const refresh = () => {
-    console.log("Refreshing weather data...");
     // Refresh the current page while preserving query parameters
     navigate(`${window.location.pathname}${window.location.search}`, {
       replace: true,
