@@ -60,7 +60,7 @@ const LocationInput = (
       <div class="flex justify-between flex-col sm:flex-row w-full">
         <input
           data-disable-while-loading
-          type="text"
+          type="search"
           id="location"
           name="location"
           value={locationModel()}
