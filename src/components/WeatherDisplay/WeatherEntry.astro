@@ -1,0 +1,31 @@
+---
+const { time, date, temperature, precipitation, symbol } = Astro.props as {
+  time: string;
+  date: string;
+  temperature: number;
+  precipitation: number;
+  symbol: string;
+};
+---
+
+<div
+  class="flex flex-row items-start justify-between w-full h-full px-2 py-4 border-b-1 border-b-gray-200"
+>
+  <div>
+    <div class="flex items-center">
+      <div class="text-lg weather-time font-semibold text-gray-500">
+        {time}
+      </div>
+      &nbsp; - &nbsp;
+      <div class="weather-date font-semibold text-gray-400">{date}</div>
+    </div>
+    <div class="weather-temperature font-semibold text-lg">
+      {temperature.toFixed(1)}°
+    </div>
+    <div class="weather-precipitation text-sky-600">
+      {precipitation.toFixed(2)} mm
+    </div>
+    {/* <div class="weather-description">{description}</div> */}
+  </div>
+  <div class="text-3xl weather-symbol">{symbol}</div>
+</div>

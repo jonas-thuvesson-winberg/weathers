@@ -1,9 +1,17 @@
-import { children, createSignal } from "solid-js";
+import { children, createSignal, type ParentProps } from "solid-js";
 import { Motion, Presence } from "solid-motionone";
-import { ChevronToggle } from "./ChevronToggle";
+import { ChevronToggle } from "../ChevronToggle";
+import SectionHeader from "./SectionHeader";
 
-export const WeatherEntryClient = (props: { children: any }) => {
+interface WeatherDisplaySectionClientProps extends ParentProps {
+  date: string;
+}
+
+export const WeatherDisplaySectionClient = (
+  props: WeatherDisplaySectionClientProps
+) => {
   const resolvedChildren = children(() => props.children);
+  const { date } = props;
 
   const [open, setOpen] = createSignal(true);
 
@@ -13,9 +21,12 @@ export const WeatherEntryClient = (props: { children: any }) => {
 
   return (
     <>
-      <div class={`flex justify-end pr-2 pb-2 border-b-1 border-gray-300`}>
+      <div
+        class={`flex justify-between items-center pr-2 pb-2 border-b-2 border-gray-300`}
+      >
+        <SectionHeader>{date}</SectionHeader>
         <ChevronToggle
-          size="1rem"
+          size="1.2rem"
           handleClick={handleClick}
           initialOpen={open()}
           duration={0.3}
@@ -40,8 +51,8 @@ export const WeatherEntryClient = (props: { children: any }) => {
               opacity: 0,
               transform: "translateY(-20px)",
               transition: {
-                transform: { duration: 0.3 },
-                opacity: { duration: 0.3 },
+                transform: { duration: 0.5 },
+                opacity: { duration: 0.5 },
               },
             }}
           >

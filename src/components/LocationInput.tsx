@@ -3,9 +3,9 @@ import { createSignal } from "solid-js";
 import { LoadingUtils } from "../utils/loading-utils";
 
 const LocationInput = (
-  { location }: { location: string } // Default value
+  props: { location: string } // Default value
 ) => {
-  const [locationModel, setLocationModel] = createSignal(location);
+  const [locationModel, setLocationModel] = createSignal(props.location);
 
   const setLocationStuff = (location: string) => {
     const url = new URL(window.location.href);
@@ -64,7 +64,7 @@ const LocationInput = (
           id="location"
           name="location"
           value={locationModel()}
-          class="border rounded-md p-2 mt-2 sm:mb-2 sm:mr-2 flex-3"
+          class="text-lg border rounded-md px-2 py-2 mt-2 sm:mb-2 sm:mr-2 flex-3 border-gray-400"
           placeholder="location"
           onInput={handleInput}
           onKeyPress={handleEnter}
@@ -72,7 +72,7 @@ const LocationInput = (
         <button
           data-disable-while-loading
           type="button"
-          class="hover:cursor-pointer bg-sky-700 rounded-md px-4 py-2 my-2 text-white flex-1"
+          class="text-lg hover:cursor-pointer bg-sky-300 hover:bg-sky-400 rounded-md px-4 py-2 my-2 text-white flex-1"
           onClick={handleClickSend}
         >
           Send

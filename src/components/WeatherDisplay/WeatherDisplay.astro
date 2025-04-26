@@ -1,17 +1,15 @@
 ---
-import type { WeatherData } from "../pages/api/weather";
+import type { WeatherData } from "../../pages/api/weather";
+import { isThePast, sortByDates } from "../../utils/date-utils";
 import WeatherEntry from "./WeatherEntry.astro";
-import { isThePast, sortByDates } from "../utils/date-utils";
-import { WeatherEntryClient } from "./WeatherEntryClient";
-import WeatherEntryBody from "./WeatherEntryBody.astro";
-import { getDateTimeDescriptive } from "../utils/date-utils";
-import { getTime } from "../utils/date-utils";
-import { getDateDescriptive } from "../utils/date-utils";
+import { getTime } from "../../utils/date-utils";
+import { getDateDescriptive } from "../../utils/date-utils";
 import WeatherDisplaySection from "./WeatherDisplaySection.astro";
 import { WeatherDisplaySectionClient } from "./WeatherDisplaySectionClient";
 
 interface WeatherEntryData {
   time: string;
+  date: string;
   dateTime: string;
   temperature: number;
   precipitation: number;
@@ -46,6 +44,7 @@ const weatherTableData = (): WeatherSectionData[] => {
 
     const entry = {
       time: getTime(new Date(time[i]).toString(), timezone)!,
+      date: getDateDescriptive(time[i]),
       dateTime: new Date(time[i]).toISOString(),
       temperature: Math.floor(Number(temperature[i]))!,
       precipitation: precipitation[i]!,
@@ -54,7 +53,7 @@ const weatherTableData = (): WeatherSectionData[] => {
       timezone: timezone!,
     };
 
-    const date = getDateDescriptive(time[i]);
+    const date = entry.date;
 
     if (sections.has(date)) {
       sections.get(date)?.entries.push(entry);
@@ -76,9 +75,11 @@ const weatherTableData = (): WeatherSectionData[] => {
     });
   }
 
-  return Array.from(sections.values()).sort((valueA, valueB) => {
-    return new Date(valueA.date).getTime() - new Date(valueB.date).getTime();
-  });
+  return Array.from(sections.values())
+    .sort((valueA, valueB) => {
+      return new Date(valueA.date).getTime() - new Date(valueB.date).getTime();
+    })
+    .filter(({ entries }) => entries.length > 0) as WeatherSectionData[];
 };
 ---
 
@@ -90,7 +91,8 @@ const weatherTableData = (): WeatherSectionData[] => {
           <WeatherDisplaySectionClient date={item.date} client:only="solid-js">
             {item.entries.map((entry) => (
               <div class="flex flex-col w-full items-center">
-                <WeatherEntryBody
+                <WeatherEntry
+                  date={entry.date}
                   time={entry.time}
                   temperature={entry.temperature}
                   precipitation={entry.precipitation}
@@ -104,6 +106,7 @@ const weatherTableData = (): WeatherSectionData[] => {
               {item.entries.map((entry) => (
                 <div class="flex flex-col w-full items-center">
                   <WeatherEntry
+                    date={entry.date}
                     time={entry.time}
                     temperature={entry.temperature}
                     precipitation={entry.precipitation}
@@ -115,26 +118,6 @@ const weatherTableData = (): WeatherSectionData[] => {
               ))}
             </WeatherDisplaySection>
           </WeatherDisplaySectionClient>
-
-          {/* <WeatherEntryClient client:only="solid-js">
-            <WeatherEntryBody
-              time={item.time}
-              temperature={item[1]}
-              precipitation={item[2]}
-              description={item[3]}
-              symbol={item[4]}
-              timezone={item[5]}
-            />
-            <WeatherEntry
-              slot="fallback"
-              time={item[0]}
-              temperature={item[1]}
-              precipitation={item[2]}
-              description={item[3]}
-              symbol={item[4]}
-              timezone={item[5]}
-            />
-          </WeatherEntryClient> */}
         </div>
       </div>
     ))
