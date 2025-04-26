@@ -55,15 +55,17 @@ export const getDateTimeLuxon = (dateString: string, timezone: string) => {
   return cityTime;
 };
 
-export const getDateDescriptive = (s: string) => {
-  const d = new Date(s);
-  return d.toDateString().split(" ").slice(0, 3).join(" ");
+export const getDateDescriptive = (s: string, timezone: string) => {
+  const dd = getDateTimeLuxon(s, timezone);
+  console.log("dd", dd);
+  if (!dd) return "";
+  return dd.toFormat("dd LLL yyyy");
 };
 
 export const getDateTime = (s: string, timezone: string) =>
   `${getDate(s, timezone)}, ${getTime(s, timezone)}`;
 export const getDateTimeDescriptive = (s: string, timezone: string) =>
-  `${getDateDescriptive(s)}, ${getTime(s, timezone)}`;
+  `${getDateDescriptive(s, timezone)}, ${getTime(s, timezone)}`;
 
 export const isThePast = (s: string) => {
   const d = new Date(s);

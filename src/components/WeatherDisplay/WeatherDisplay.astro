@@ -44,7 +44,7 @@ const weatherTableData = (): WeatherSectionData[] => {
 
     const entry = {
       time: getTime(new Date(time[i]).toString(), timezone)!,
-      date: getDateDescriptive(time[i]),
+      date: getDateDescriptive(time[i], timezone),
       dateTime: new Date(time[i]).toISOString(),
       temperature: Math.floor(Number(temperature[i]))!,
       precipitation: precipitation[i]!,
