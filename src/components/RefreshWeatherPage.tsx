@@ -1,8 +1,10 @@
 import { navigate } from "astro:transitions/client";
 import { IoRefreshCircle } from "solid-icons/io";
+import { LoadingUtils } from "../utils/loading-utils";
 
 const RefreshWeatherPage = () => {
   const refresh = () => {
+    if (LoadingUtils.isLoading()) return;
     console.log("Refreshing weather data...");
     // Refresh the current page while preserving query parameters
     navigate(`${window.location.pathname}${window.location.search}`, {

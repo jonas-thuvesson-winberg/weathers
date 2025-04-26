@@ -40,7 +40,7 @@ const weatherTableData = () => {
   {
     weatherTableData().map((item) => (
       <div class="flex flex-col w-full items-center">
-        <div class="pt-4 w-full max-w-2xl xl:max-w-3xl flex flex-wrap flex-col">
+        <div class="pt-4 w-full flex flex-wrap flex-col">
           <WeatherEntryClient client:only="solid-js">
             <WeatherEntryBody
               time={item[0]}

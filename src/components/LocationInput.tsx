@@ -1,0 +1,85 @@
+import { navigate } from "astro:transitions/client";
+import { createSignal } from "solid-js";
+import { LoadingUtils } from "../utils/loading-utils";
+
+const LocationInput = (
+  { location }: { location: string } // Default value
+) => {
+  const [locationModel, setLocationModel] = createSignal(location);
+
+  const setLocationStuff = (location: string) => {
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    params.set("location", location);
+    console.log("params", params);
+    window.history.replaceState({}, "", `${url.pathname}?${params.toString()}`);
+  };
+
+  const handleInput = (e: Event) => {
+    const t = (e.target as HTMLInputElement).value;
+    setLocationModel(t);
+    setLocationStuff(locationModel());
+  };
+
+  const handleSend = () => {
+    if (LoadingUtils.isLoading()) return;
+    console.log("Update with location:", locationModel());
+    refresh();
+  };
+
+  const handleEnter = (e: Event) => {
+    // e.preventDefault();
+    // e.stopPropagation();
+    const keyEvent = e as KeyboardEvent;
+    if (keyEvent.key !== "Enter") return;
+
+    handleSend();
+  };
+
+  const handleClickSend = (e: Event) => {
+    console.log("Button clicked");
+
+    e.preventDefault();
+    e.stopPropagation();
+    handleSend();
+  };
+
+  const refresh = () => {
+    console.log("Refreshing weather data...");
+    // Refresh the current page while preserving query parameters
+    navigate(`${window.location.pathname}${window.location.search}`, {
+      replace: true,
+    } as any);
+    // window.location.reload();
+  };
+
+  setLocationStuff(locationModel());
+
+  return (
+    <>
+      <div class="flex justify-between flex-col sm:flex-row w-full">
+        <input
+          data-disable-while-loading
+          type="text"
+          id="location"
+          name="location"
+          value={locationModel()}
+          class="border rounded-md p-2 mt-2 sm:mb-2 sm:mr-2 flex-3"
+          placeholder="location"
+          onInput={handleInput}
+          onKeyPress={handleEnter}
+        />
+        <button
+          data-disable-while-loading
+          type="button"
+          class="hover:cursor-pointer bg-sky-700 rounded-md px-4 py-2 my-2 text-white flex-1"
+          onClick={handleClickSend}
+        >
+          Send
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default LocationInput;

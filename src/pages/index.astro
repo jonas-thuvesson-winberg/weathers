@@ -4,14 +4,32 @@ export const prerender = false;
 import MainWeatherDisplay from "../components/MainWeatherDisplay.astro";
 import WeatherDisplay from "../components/WeatherDisplay.astro";
 import Layout from "../layouts/Layout.astro";
+import LocationInput from "../components/LocationInput";
 
-const location = Astro.url.searchParams.get("location") || "Stockholm";
+let location = Astro.url.searchParams.get("location") || "Stockholm";
 const res = await fetch(
   `${Astro.url.origin}/api/weather?location=${location}`
 ).then(async (r) => await r.json());
 ---
 
 <Layout scrollToTop={true}>
-  <MainWeatherDisplay weatherData={res} />
-  <WeatherDisplay weatherData={res} />
+  <div class="w-full flex justify-center">
+    <div class="w-full max-w-2xl xl:max-w-3xl flex flex-col justify-center">
+      <LocationInput location={location} client:only="solid-js" />
+      <MainWeatherDisplay weatherData={res} />
+      <WeatherDisplay weatherData={res} />
+    </div>
+  </div>
 </Layout>
+
+<script>
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   if (!params.has("location")) {
+  //     params.set("location", "Stockholm");
+  //     const newUrl = `${window.location.pathname}?${params.toString()}`;
+  //     window.history.replaceState({}, "", newUrl);
+  //     console.log("No location provided, defaulting to Stockholm");
+  //   }
+  // });
+</script>
