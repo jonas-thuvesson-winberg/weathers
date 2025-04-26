@@ -4,9 +4,29 @@ import WeatherEntry from "./WeatherEntry.astro";
 import { isThePast, sortByDates } from "../utils/date-utils";
 import { WeatherEntryClient } from "./WeatherEntryClient";
 import WeatherEntryBody from "./WeatherEntryBody.astro";
+import { getDateTimeDescriptive } from "../utils/date-utils";
+import { getTime } from "../utils/date-utils";
+import { getDateDescriptive } from "../utils/date-utils";
+import WeatherDisplaySection from "./WeatherDisplaySection.astro";
+import { WeatherDisplaySectionClient } from "./WeatherDisplaySectionClient";
+
+interface WeatherEntryData {
+  time: string;
+  dateTime: string;
+  temperature: number;
+  precipitation: number;
+  description: string;
+  symbol: string;
+  timezone: string;
+}
+
+interface WeatherSectionData {
+  date: string;
+  entries: WeatherEntryData[];
+}
 
 const data = Astro.props as { weatherData: WeatherData };
-const weatherTableData = () => {
+const weatherTableData = (): WeatherSectionData[] => {
   const {
     weatherData: {
       timezone,
@@ -14,7 +34,7 @@ const weatherTableData = () => {
     },
   } = data;
 
-  let out: [string, number, number, string, string, string][] = [];
+  let sections: Map<string, WeatherSectionData> = new Map();
 
   // Is supposed to be array, but API I'm using is stupid
   const tempLength = Array.isArray(temperature)
@@ -24,16 +44,41 @@ const weatherTableData = () => {
   for (let i = 0; i < tempLength; i++) {
     let { description, symbol } = weatherCode[i];
 
-    out.push([
-      new Date(time[i]).toString(),
-      Math.floor(Number(temperature[i])),
-      precipitation[i],
-      description,
-      symbol,
-      timezone,
-    ]);
+    const entry = {
+      time: getTime(new Date(time[i]).toString(), timezone)!,
+      dateTime: new Date(time[i]).toISOString(),
+      temperature: Math.floor(Number(temperature[i]))!,
+      precipitation: precipitation[i]!,
+      description: description!,
+      symbol: symbol!,
+      timezone: timezone!,
+    };
+
+    const date = getDateDescriptive(time[i]);
+
+    if (sections.has(date)) {
+      sections.get(date)?.entries.push(entry);
+    } else {
+      sections.set(date, {
+        date,
+        entries: [entry],
+      });
+    }
   }
-  return sortByDates(out, (x) => x[0]).filter(([d]) => !isThePast(d));
+
+  for (const [key, value] of sections) {
+    sections.set(key, {
+      ...value,
+
+      entries: sortByDates(value.entries, (x) => x.time).filter(
+        ({ dateTime }) => !isThePast(dateTime)
+      ),
+    });
+  }
+
+  return Array.from(sections.values()).sort((valueA, valueB) => {
+    return new Date(valueA.date).getTime() - new Date(valueB.date).getTime();
+  });
 };
 ---
 
@@ -42,18 +87,44 @@ const weatherTableData = () => {
     weatherTableData().map((item) => (
       <div class="flex flex-col w-full items-center">
         <div class="pt-4 w-full flex flex-wrap flex-col">
-          {/* Solid-js component weather entry client, for use on the client side */}
-          <WeatherEntryClient client:only="solid-js">
-            {/* Slot/transclude the astro component weather entry body (into the solid-js component) */}
+          <WeatherDisplaySectionClient date={item.date} client:only="solid-js">
+            {item.entries.map((entry) => (
+              <div class="flex flex-col w-full items-center">
+                <WeatherEntryBody
+                  time={entry.time}
+                  temperature={entry.temperature}
+                  precipitation={entry.precipitation}
+                  description={entry.description}
+                  symbol={entry.symbol}
+                  timezone={entry.timezone}
+                />
+              </div>
+            ))}
+            <WeatherDisplaySection slot="fallback" date={item.date}>
+              {item.entries.map((entry) => (
+                <div class="flex flex-col w-full items-center">
+                  <WeatherEntry
+                    time={entry.time}
+                    temperature={entry.temperature}
+                    precipitation={entry.precipitation}
+                    description={entry.description}
+                    symbol={entry.symbol}
+                    timezone={entry.timezone}
+                  />
+                </div>
+              ))}
+            </WeatherDisplaySection>
+          </WeatherDisplaySectionClient>
+
+          {/* <WeatherEntryClient client:only="solid-js">
             <WeatherEntryBody
-              time={item[0]}
+              time={item.time}
               temperature={item[1]}
               precipitation={item[2]}
               description={item[3]}
               symbol={item[4]}
               timezone={item[5]}
             />
-            {/* Fallback content for the client component. Falls back to the astro component weather entry */}
             <WeatherEntry
               slot="fallback"
               time={item[0]}
@@ -63,7 +134,7 @@ const weatherTableData = () => {
               symbol={item[4]}
               timezone={item[5]}
             />
-          </WeatherEntryClient>
+          </WeatherEntryClient> */}
         </div>
       </div>
     ))
