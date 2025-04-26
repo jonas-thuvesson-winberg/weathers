@@ -4,20 +4,22 @@ import logo from "../assets/logo.png";
 import ScrollToTop from "../components/ScrollToTop";
 
 const links: [string, string][] = [
-  //   ["Home", "/"],
-  //   ["About", "/about"],
+  ["Home", "/"],
+  ["About", "/about"],
 ];
+
+const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
 ---
 
 <header
-  class="header flex flex-row justify-between items-center w-full h-[80px] px-3 xs:px-9 lg:px-27 xl:px-36 bg-white"
+  class="header flex flex-row justify-between items-center w-full h-[100px] px-3 xs:px-9 lg:px-27 xl:px-36 bg-white"
 >
   {" "}
   <div class="flex flex-row items-center">
     <img src={logo.src} alt="Logo" class="logo h-15 w-15" />
     <h1 class="px-4 text-2xl">Weathers</h1>{" "}
   </div>
-  <div>
+  <div class="flex items-center">
     <ul>
       {
         links.map((item) => (
@@ -27,20 +29,12 @@ const links: [string, string][] = [
         ))
       }
     </ul>
-    <ScrollToTop client:only="solid-js" />
-    <!-- <div>
-      <FaSolidChevronUp class="hover:cursor-pointer" id="scroll-to-top" />
-    </div> -->
+    {
+      scrollToTop && (
+        <div id="scroll-to-top" class="ml-4">
+          <ScrollToTop client:only="solid-js" />
+        </div>
+      )
+    }
   </div>
 </header>
-
-<script>
-  // const button = document.getElementById("scroll-to-top");
-
-  // button!.addEventListener("click", () => {
-  //   console.log("Button clicked!");
-  //   document
-  //     .querySelector("body")!
-  //     .scrollIntoView({ behavior: "smooth", block: "start" });
-  // });
-</script>

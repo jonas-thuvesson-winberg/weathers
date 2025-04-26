@@ -11,7 +11,7 @@ const res = await fetch(
 ).then(async (r) => await r.json());
 ---
 
-<Layout>
+<Layout scrollToTop={true}>
   <MainWeatherDisplay weatherData={res} />
   <WeatherDisplay weatherData={res} />
 </Layout>

@@ -1,4 +1,4 @@
-import { FaSolidChevronUp } from "solid-icons/fa";
+import { FaSolidArrowUp, FaSolidChevronUp } from "solid-icons/fa";
 
 const ScrollToTop = () => {
   const scrollToTop = () => {
@@ -6,10 +6,9 @@ const ScrollToTop = () => {
   };
 
   return (
-    <FaSolidChevronUp
+    <FaSolidArrowUp
       onClick={scrollToTop}
       class="hover:cursor-pointer"
-      id="scroll-to-top"
     />
   );
 };

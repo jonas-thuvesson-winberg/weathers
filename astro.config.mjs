@@ -7,6 +7,8 @@ import svgr from "vite-plugin-svgr";
 
 import netlify from "@astrojs/netlify";
 
+import mdx from "@astrojs/mdx";
+
 // https://astro.build/config
 export default defineConfig({
   adapter: netlify(),
@@ -20,5 +22,5 @@ export default defineConfig({
     ],
   },
 
-  integrations: [solidJs()],
+  integrations: [solidJs(), mdx()],
 });

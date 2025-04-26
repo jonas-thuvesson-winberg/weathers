@@ -4,6 +4,8 @@ import { ScrollObserver } from "astro-scroll-observer";
 
 import "../styles/global.css";
 import Header from "./Header.astro";
+
+const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
 ---
 
 <!doctype html>
@@ -21,7 +23,7 @@ import Header from "./Header.astro";
   </head>
   <body class="min-h-screen flex flex-col justify-between">
     <div class="header-container">
-      <Header />
+      <Header scrollToTop={scrollToTop} />
     </div>
     <div class="main p-5 flex-1">
       <slot />
