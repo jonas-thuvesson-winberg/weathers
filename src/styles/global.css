@@ -37,11 +37,11 @@ html {
   height: 40px !important;
 }
 
-#scroll-to-top {
+#scroll-to-top-fab {
   @apply hidden;
 }
 
-[data-is-top="false"] #scroll-to-top {
+[data-is-top="false"] #scroll-to-top-fab {
   @apply block;
 }
 
