@@ -16,7 +16,7 @@ const ScrollToTop = (props: {
       scrollToTop();
     }
   });
-  
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -24,7 +24,7 @@ const ScrollToTop = (props: {
   const handleScrollToTop = (e: MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    if (props.trigger) return;
+    // if (props.trigger) return;
     scrollToTop();
   };
 
