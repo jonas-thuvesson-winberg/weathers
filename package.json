@@ -23,12 +23,14 @@
     "solid-icons": "^1.1.0",
     "solid-js": "^1.9.5",
     "solid-motionone": "^1.0.3",
-    "tailwindcss": "^4.1.4"
+    "tailwindcss": "^4.1.4",
+    "tz-lookup": "^6.1.25"
   },
   "devDependencies": {
     "@types/luxon": "^3.6.2",
     "@types/node": "^22.14.1",
     "@types/node-geocoder": "^4.2.6",
+    "@types/tz-lookup": "^6.1.2",
     "vite-plugin-svgr": "^4.3.0"
   }
 }

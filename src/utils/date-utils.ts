@@ -1,22 +1,58 @@
-export const getTime = (s: string) => {
-  const d = new Date(s);
-  const options: Intl.DateTimeFormatOptions = {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Europe/Stockholm",
+import { DateTime } from "luxon";
+import NodeGeocoder, { type Options } from "node-geocoder";
+import { default as nodeFetch } from "node-fetch";
+
+/***
+ * SERVER ONLY - needs node-fetch
+ */
+export const getGeocoder = () => {
+  const options: Options = {
+    provider: "openstreetmap",
+    // Optional depending on your needs
+    // httpAdapter: 'https', // Default
+    // formatter: null, // 'gpx', 'string', ...
+    // Set custom headers to comply with OSM usage policy
+    // @ts-ignore
+    fetch: async function (url: globalThis.RequestInfo, init?: RequestInit) {
+      const headers = {
+        ...init?.headers,
+        "User-Agent": "Weathers/0.1 (jonasthuvesson@gmail.com)",
+      };
+
+      // TODO: A bit hacky... maybe look into a better way
+      return (await nodeFetch(url.toString(), {
+        ...init,
+        headers,
+        body:
+          init?.body instanceof ArrayBuffer
+            ? Buffer.from(init.body)
+            : (init?.body as any),
+      })) as unknown as Response;
+    },
   };
-  return d.toLocaleTimeString("sv-SE", options);
+
+  return NodeGeocoder(options);
 };
 
-export const getDate = (s: string) => {
-  const d = new Date(s);
-  const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    timeZone: "Europe/Stockholm",
-  };
-  return d.toLocaleDateString("sv-SE", options);
+export const getTime = (dateString: string, timezone: string) => {
+  const dt = getDateTimeLuxon(dateString, timezone);
+  if (!dt) return "";
+  return dt.toISOTime()?.split(":").slice(0, 2).join(":");
+};
+
+export const getDate = (dateString: string, timezone: string) => {
+  const dt = getDateTimeLuxon(dateString, timezone);
+  if (!dt) return "";
+  return dt.toISODate();
+};
+
+export const getDateTimeLuxon = (dateString: string, timezone: string) => {
+  if (!dateString || !timezone) return null;
+
+  let cityTime: DateTime | null = null;
+  cityTime = DateTime.fromJSDate(new Date(dateString)).setZone(timezone);
+
+  return cityTime;
 };
 
 export const getDateDescriptive = (s: string) => {
@@ -24,9 +60,10 @@ export const getDateDescriptive = (s: string) => {
   return d.toDateString().split(" ").slice(0, 3).join(" ");
 };
 
-export const getDateTime = (s: string) => `${getDate(s)}, ${getTime(s)}`;
-export const getDateTimeDescriptive = (s: string) =>
-  `${getDateDescriptive(s)}, ${getTime(s)}`;
+export const getDateTime = (s: string, timezone: string) =>
+  `${getDate(s, timezone)}, ${getTime(s, timezone)}`;
+export const getDateTimeDescriptive = (s: string, timezone: string) =>
+  `${getDateDescriptive(s)}, ${getTime(s, timezone)}`;
 
 export const isThePast = (s: string) => {
   const d = new Date(s);

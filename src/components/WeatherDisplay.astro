@@ -1,6 +1,5 @@
 ---
 import type { WeatherData } from "../pages/api/weather";
-// import { WeatherEntry } from "./WeatherEntry";
 import WeatherEntry from "./WeatherEntry.astro";
 import { isThePast, sortByDates } from "../utils/date-utils";
 import { WeatherEntryClient } from "./WeatherEntryClient";
@@ -10,11 +9,12 @@ const data = Astro.props as { weatherData: WeatherData };
 const weatherTableData = () => {
   const {
     weatherData: {
+      timezone,
       hourly: { temperature, time, weatherCodes: weatherCode, precipitation },
     },
   } = data;
 
-  let out: [string, number, number, string, string][] = [];
+  let out: [string, number, number, string, string, string][] = [];
 
   // Is supposed to be array, but API I'm using is stupid
   const tempLength = Array.isArray(temperature)
@@ -30,6 +30,7 @@ const weatherTableData = () => {
       precipitation[i],
       description,
       symbol,
+      timezone,
     ]);
   }
   return sortByDates(out, (x) => x[0]).filter(([d]) => !isThePast(d));
@@ -41,14 +42,18 @@ const weatherTableData = () => {
     weatherTableData().map((item) => (
       <div class="flex flex-col w-full items-center">
         <div class="pt-4 w-full flex flex-wrap flex-col">
+          {/* Solid-js component weather entry client, for use on the client side */}
           <WeatherEntryClient client:only="solid-js">
+            {/* Slot/transclude the astro component weather entry body (into the solid-js component) */}
             <WeatherEntryBody
               time={item[0]}
               temperature={item[1]}
               precipitation={item[2]}
               description={item[3]}
               symbol={item[4]}
+              timezone={item[5]}
             />
+            {/* Fallback content for the client component. Falls back to the astro component weather entry */}
             <WeatherEntry
               slot="fallback"
               time={item[0]}
@@ -56,6 +61,7 @@ const weatherTableData = () => {
               precipitation={item[2]}
               description={item[3]}
               symbol={item[4]}
+              timezone={item[5]}
             />
           </WeatherEntryClient>
         </div>

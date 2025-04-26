@@ -6,6 +6,7 @@ import type { WeatherData } from "../pages/api/weather";
 const {
   weatherData: {
     location,
+    timezone,
     current: {
       time,
       temperature,
@@ -20,6 +21,7 @@ const {
 const { description: weatherDescription, symbol: weatherSymbol } = weatherCode;
 
 const toTitleCase = (str: string) => {
+  if (!str) return str;
   return str.slice(0, 1).toUpperCase() + str.slice(1);
 };
 ---
@@ -55,7 +57,7 @@ const toTitleCase = (str: string) => {
             </div>
           )
         }
-        <div class="text-xl mx-10">{getDateTimeDescriptive(time)}</div>
+        <div class="text-xl mx-10">{getDateTimeDescriptive(time, timezone)}</div>
       </div>
     </div>
   </div>

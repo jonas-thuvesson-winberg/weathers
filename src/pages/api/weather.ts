@@ -11,10 +11,12 @@ import { DateTime } from "luxon";
 import { mockWeatherData as mockData } from "../../utils/mock-weather-data";
 import * as fs from "node:fs";
 import NodeGeocoder, { type Options } from "node-geocoder";
-import { default as nodeFetch } from "node-fetch";
+import { getGeocoder } from "../../utils/date-utils";
+import tzLookup from "tz-lookup";
 
 export interface WeatherData {
   location: string;
+  timezone: string;
   current: {
     time: string;
     temperature: number;
@@ -66,13 +68,12 @@ const mapResponses = async (
 ) => {
   const response = responses![0];
 
-  // Attributes for timezone and location
   const utcOffsetSeconds = response.utcOffsetSeconds();
-  const timezone = response.timezone();
-  const timezoneAbbreviation = response.timezoneAbbreviation();
   const latitude = response.latitude();
   const longitude = response.longitude();
-  const r = await geocoder.reverse({ lat: latitude, lon: longitude });
+
+  const timezone = tzLookup(latitude, longitude);
+  const locations = await geocoder.reverse({ lat: latitude, lon: longitude });
 
   const current = response.current()!;
   const hourly = response.hourly()!;
@@ -81,7 +82,8 @@ const mapResponses = async (
   // Note: The order of weather variables in the URL query and the indices below need to match!
   const weatherData: WeatherData = {
     // TODO: Make location dynamic
-    location: r[0].city!,
+    location: locations[0].city!,
+    timezone,
     current: {
       time: new Date(
         adjustTime(Number(current.time()), utcOffsetSeconds)
@@ -137,32 +139,7 @@ const mapResponses = async (
 };
 
 const getWeatherData = async (location: string | null) => {
-  const options: Options = {
-    provider: "openstreetmap",
-    // Optional depending on your needs
-    // httpAdapter: 'https', // Default
-    // formatter: null, // 'gpx', 'string', ...
-    // Set custom headers to comply with OSM usage policy
-    // @ts-ignore
-    fetch: async function (url: globalThis.RequestInfo, init?: RequestInit) {
-      const headers = {
-        ...init?.headers,
-        "User-Agent": "Weathers/0.1 (jonasthuvesson@gmail.com)",
-      };
-
-      // TODO: A bit hacky... maybe look into a better way
-      return (await nodeFetch(url.toString(), {
-        ...init,
-        headers,
-        body:
-          init?.body instanceof ArrayBuffer
-            ? Buffer.from(init.body)
-            : (init?.body as any),
-      })) as unknown as Response;
-    },
-  };
-
-  const geocoder = NodeGeocoder(options);
+  const geocoder = getGeocoder();
   const r = await geocoder.geocode(location || "Stockholm");
 
   const params = {
@@ -189,6 +166,7 @@ const mockWeatherData = () => {
 const mockWeatherData2 = () => {
   const weatherData: WeatherData = {
     location: "Stockholm",
+    timezone: "Europe/Stockholm",
     current: {
       time: new Date().toISOString(),
       timeAdjusted: null,

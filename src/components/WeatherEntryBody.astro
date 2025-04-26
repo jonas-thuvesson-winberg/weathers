@@ -1,20 +1,22 @@
 ---
 import { getTime, getDateDescriptive } from "../utils/date-utils";
 
-const { time, temperature, precipitation, description, symbol } =
+const { time, temperature, precipitation, description, symbol, location, timezone } =
   Astro.props as {
     time: string;
     temperature: number;
     precipitation: number;
     description: string;
     symbol: string;
+    location: string;
+    timezone: string;
   };
 ---
 
 <div class="flex flex-row items-start justify-between w-full h-full px-2 pt-4">
   <div>
     <div class="text-lg weather-time font-semibold">
-      {getTime(time)}
+      {getTime(time, timezone)}
     </div>
     <div class="weather-date">{getDateDescriptive(time)}</div>
     <div class="weather-temperature">{temperature.toFixed(1)}°</div>

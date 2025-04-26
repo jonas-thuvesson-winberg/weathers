@@ -1,5 +1,6 @@
 export const mockWeatherData = {
   location: "Stockholm",
+  timezone: "Europe/Stockholm",
   current: {
     time: "2025-04-24T19:15:00.000Z",
     timeAdjusted: null,

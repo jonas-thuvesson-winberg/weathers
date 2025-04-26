@@ -1,14 +1,23 @@
 ---
 import WeatherEntryBody from "./WeatherEntryBody.astro";
 
-const { time, temperature, precipitation, symbol, description } =
-  Astro.props as {
-    time: string;
-    temperature: number;
-    precipitation: number;
-    description: string;
-    symbol: string;
-  };
+const {
+  time,
+  temperature,
+  precipitation,
+  symbol,
+  description,
+  location,
+  timezone,
+} = Astro.props as {
+  time: string;
+  temperature: number;
+  precipitation: number;
+  description: string;
+  symbol: string;
+  location: string;
+  timezone: string;
+};
 ---
 
 <div class={`flex justify-end pr-2 pb-2 border-b-1 border-gray-300`}></div>
@@ -18,4 +27,6 @@ const { time, temperature, precipitation, symbol, description } =
   precipitation={precipitation}
   description={description}
   symbol={symbol}
+  location={location}
+  timezone={timezone}
 />
