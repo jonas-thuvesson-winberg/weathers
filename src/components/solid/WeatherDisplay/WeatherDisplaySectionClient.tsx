@@ -1,3 +1,5 @@
+/** @jsxImportSource solid-js */
+
 import { children, createSignal, type ParentProps } from "solid-js";
 import { Motion, Presence } from "solid-motionone";
 import { ChevronToggle } from "../ChevronToggle";

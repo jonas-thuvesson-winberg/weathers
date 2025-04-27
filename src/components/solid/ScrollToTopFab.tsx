@@ -1,3 +1,5 @@
+/** @jsxImportSource solid-js */
+
 import { createSignal } from "solid-js";
 import ScrollToTop, { type ClickEvt } from "./ScrollToTop";
 

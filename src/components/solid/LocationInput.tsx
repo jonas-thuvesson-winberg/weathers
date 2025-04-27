@@ -1,6 +1,8 @@
+/** @jsxImportSource solid-js */
+
 import { navigate } from "astro:transitions/client";
 import { createSignal } from "solid-js";
-import { LoadingUtils } from "../utils/loading-utils";
+import { LoadingUtils } from "../../utils/loading-utils";
 
 const LocationInput = (
   props: { location: string } // Default value

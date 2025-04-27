@@ -1,3 +1,5 @@
+/** @jsxImportSource solid-js */
+
 import { createMemo, createSignal } from "solid-js";
 import { Motion } from "solid-motionone";
 import { FaSolidChevronUp } from "solid-icons/fa";

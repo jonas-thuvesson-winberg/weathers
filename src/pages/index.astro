@@ -2,9 +2,10 @@
 export const prerender = false;
 
 import MainWeatherDisplay from "../components/MainWeatherDisplay.astro";
-import WeatherDisplay from "../components/WeatherDisplay/WeatherDisplay.astro";
+import WeatherDisplay from "../components/solid/WeatherDisplay/WeatherDisplay.astro";
 import Layout from "../layouts/Layout.astro";
-import LocationInput from "../components/LocationInput";
+import LocationInput from "../components/solid/LocationInput";
+import { Counter } from "../components/qwik/counter";
 
 let location = Astro.url.searchParams.get("location") || "Stockholm";
 const res = await fetch(
@@ -16,6 +17,8 @@ const res = await fetch(
   <div class="w-full flex justify-center">
     <div class="w-full max-w-2xl xl:max-w-3xl flex flex-col justify-center">
       <LocationInput location={location} client:only="solid-js" />
+      <Counter />
+
       <MainWeatherDisplay weatherData={res} />
       <WeatherDisplay weatherData={res} />
     </div>

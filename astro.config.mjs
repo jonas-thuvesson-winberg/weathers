@@ -9,10 +9,11 @@ import netlify from "@astrojs/netlify";
 
 import mdx from "@astrojs/mdx";
 
+import qwikdev from "@qwikdev/astro";
+
 // https://astro.build/config
 export default defineConfig({
   adapter: netlify(),
-
   vite: {
     plugins: [
       tailwindcss(),
@@ -22,5 +23,15 @@ export default defineConfig({
     ],
   },
 
-  integrations: [solidJs(), mdx()],
+  integrations: [
+    qwikdev({
+      include: ["**/qwik/*"],
+      exclude: ["**/solid/*"],
+    }),
+    solidJs({
+      include: ["**/solid/*"],
+      exclude: ["**/qwik/*"],
+    }),
+    mdx(),
+  ],
 });

@@ -1,3 +1,5 @@
+/** @jsxImportSource solid-js */
+
 import { FaSolidArrowUp, FaSolidChevronUp } from "solid-icons/fa";
 import { createEffect, createSignal, type Accessor } from "solid-js";
 

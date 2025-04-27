@@ -4,7 +4,7 @@ import { ScrollObserver } from "astro-scroll-observer";
 
 import "../styles/global.css";
 import Header from "./Header.astro";
-import ScrollToTopFab from "../components/ScrollToTopFab";
+import ScrollToTopFab from "../components/solid/ScrollToTopFab";
 import type { only } from "node:test";
 
 const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
@@ -31,7 +31,7 @@ const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
       <slot />
     </div>
 
-    <ScrollToTopFab client:only="true" />
+    <ScrollToTopFab client:only="solid-js" />
     <!-- <Footer /> -->
 
     <div
