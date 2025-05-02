@@ -58,7 +58,7 @@ export const getDateTimeLuxon = (dateString: string, timezone: string) => {
 export const getDateDescriptive = (s: string, timezone: string) => {
   const dd = getDateTimeLuxon(s, timezone);
   if (!dd) return "";
-  return dd.toFormat("ccc, LLL d");
+  return dd.toFormat("cccc, LLL d");
 };
 
 export const getDateTime = (s: string, timezone: string) =>
