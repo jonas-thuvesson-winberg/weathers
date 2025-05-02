@@ -3,11 +3,11 @@ import { createSignal } from "solid-js";
 import { LoadingUtils } from "../utils/loading-utils";
 
 const LocationInput = (
-  props: { location: string } // Default value
+  props: { location: string }
 ) => {
   const [locationModel, setLocationModel] = createSignal(props.location);
 
-  const setLocationStuff = (location: string) => {
+  const setLocation = (location: string) => {
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);
     params.set("location", location);
@@ -17,7 +17,7 @@ const LocationInput = (
   const handleInput = (e: Event) => {
     const t = (e.target as HTMLInputElement).value;
     setLocationModel(t);
-    setLocationStuff(locationModel());
+    setLocation(locationModel());
   };
 
   const handleSend = () => {
@@ -46,7 +46,7 @@ const LocationInput = (
     // window.location.reload();
   };
 
-  setLocationStuff(locationModel());
+  setLocation(locationModel());
 
   return (
     <>
