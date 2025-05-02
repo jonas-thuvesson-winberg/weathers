@@ -67,9 +67,25 @@ interface SmhiForecastResponse {
   timeSeries: SmhiTimeSeriesEntry[];
 }
 
+const parseLocation = (
+  locations: NodeGeocoder.Entry[],
+  cityFallback: string
+) => {
+  const locationPart = (l: string | null | undefined, fallback?: string) =>
+    l || fallback ? (l || fallback) + ", " : "";
+
+  return (
+    locationPart(locations[0].city, cityFallback) +
+    locationPart(locations[0].district) +
+    locationPart(locations[0].state) +
+    locationPart(locations[0].country)
+  );
+};
+
 const mapResponsesOpenMeteo = async (
   responses: WeatherApiResponse[],
-  geocoder: NodeGeocoder.Geocoder
+  geocoder: NodeGeocoder.Geocoder,
+  location: string = "Stockholm"
 ) => {
   // Helper function to form time ranges
   const toDateRange = (start: number, stop: number, step: number) =>
@@ -100,7 +116,7 @@ const mapResponsesOpenMeteo = async (
   // Note: The order of weather variables in the URL query and the indices below need to match!
   const weatherData: WeatherData = {
     // TODO: Make location dynamic
-    location: locations[0].city! + ", " + locations[0].country!,
+    location: parseLocation(locations, location),
     timezone,
     current: {
       time: new Date(
@@ -156,9 +172,9 @@ const mapResponsesOpenMeteo = async (
   return new Response(JSON.stringify(weatherData));
 };
 
-const getWeatherDataOpenMeteo = async (location: string | null) => {
+const getWeatherDataOpenMeteo = async (location: string = "Stockholm") => {
   const geocoder = getGeocoder();
-  const r = await geocoder.geocode(location || "Stockholm");
+  const r = await geocoder.geocode(location);
 
   const params = {
     latitude: r[0].latitude,
@@ -170,23 +186,31 @@ const getWeatherDataOpenMeteo = async (location: string | null) => {
   };
   const url = "https://api.open-meteo.com/v1/forecast";
   const response = await fetchWeatherApi(url, params);
-  return mapResponsesOpenMeteo(response, geocoder);
+  return mapResponsesOpenMeteo(response, geocoder, location);
 };
 
 const getWeatherDataSmhi = async (
-  location: string | null
+  location: string = "Stockholm"
 ): Promise<Response> => {
   const geocoder = getGeocoder();
-  const r = await geocoder.geocode(location || "Stockholm");
+  const r = await geocoder.geocode(location);
   const latitude = r[0].latitude!.toFixed(4);
   const longitude = r[0].longitude!.toFixed(4);
+
+  const locations = await geocoder.reverse({
+    lat: Number(latitude),
+    lon: Number(longitude),
+  });
+
+  if (locations?.[0]?.country?.toLowerCase().trim() !== "sverige")
+    return getWeatherDataOpenMeteo(location);
 
   const url = `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`;
   console.log(url);
   return fetch(url)
     .then((response) => {
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        console.error("Network response was not ok");
       }
 
       const json = response.json();
@@ -194,13 +218,13 @@ const getWeatherDataSmhi = async (
     })
     .then(async (data: SmhiForecastResponse) => {
       const timezone = tzLookup(Number(latitude), Number(longitude));
-      const locations = await geocoder.reverse({
-        lat: Number(latitude),
-        lon: Number(longitude),
-      });
+      // const locations = await geocoder.reverse({
+      //   lat: Number(latitude),
+      //   lon: Number(longitude),
+      // });
 
       const res: WeatherData = {
-        location: locations[0].city! + ", " + locations[0].country!,
+        location: parseLocation(locations, location),
         timezone,
         current: {
           time: new Date(data.timeSeries[0].validTime).toISOString(),
@@ -330,5 +354,5 @@ export async function GET({ request }: { request: Request }) {
   const searchParams = url.searchParams;
   const location = searchParams.get("location");
   //return mockWeatherData();
-  return getWeatherDataSmhi(location);
+  return getWeatherDataSmhi(location || "Stockholm");
 }
