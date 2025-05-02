@@ -12,6 +12,7 @@ import * as fs from "node:fs";
 import NodeGeocoder, { type Options } from "node-geocoder";
 import { getGeocoder } from "../../utils/date-utils";
 import tzLookup from "tz-lookup";
+import { weatherCodeMapSmhi } from "../../utils/weather-codes-smhi";
 
 export interface WeatherData {
   location: string;
@@ -32,7 +33,7 @@ export interface WeatherData {
     precipitation: number[];
     // timeAdjusted?: string[];
   };
-  daily: {
+  daily?: {
     time: string[];
     weatherCodes: { description: string; symbol: string }[];
     // timeAdjusted?: string[];
@@ -41,23 +42,48 @@ export interface WeatherData {
   };
 }
 
-// Helper function to form time ranges
-const toDateRange = (start: number, stop: number, step: number) =>
-  Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
+interface SmhiGeometry {
+  type: string;
+  coordinates: number[][][];
+}
 
-const adjustTime = (t: number, utcOffsetSeconds: number) =>
-  new Date((t + utcOffsetSeconds) * 1000);
+interface SmhiParameter {
+  name: string;
+  levelType: string;
+  level: number;
+  unit: string;
+  values: number[];
+}
 
-const toWeatherDescription = (
-  code: number
-): { description: string; symbol: string } => {
-  return wmo4677WithSymbols[Number(code)];
-};
+interface SmhiTimeSeriesEntry {
+  validTime: string;
+  parameters: SmhiParameter[];
+}
 
-const mapResponses = async (
+interface SmhiForecastResponse {
+  approvedTime: string;
+  referenceTime: string;
+  geometry: SmhiGeometry;
+  timeSeries: SmhiTimeSeriesEntry[];
+}
+
+const mapResponsesOpenMeteo = async (
   responses: WeatherApiResponse[],
   geocoder: NodeGeocoder.Geocoder
 ) => {
+  // Helper function to form time ranges
+  const toDateRange = (start: number, stop: number, step: number) =>
+    Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
+
+  const adjustTime = (t: number, utcOffsetSeconds: number) =>
+    new Date((t + utcOffsetSeconds) * 1000);
+
+  const toWeatherDescription = (
+    code: number
+  ): { description: string; symbol: string } => {
+    return wmo4677WithSymbols[Number(code)];
+  };
+
   const response = responses![0];
 
   const utcOffsetSeconds = response.utcOffsetSeconds();
@@ -118,8 +144,8 @@ const mapResponses = async (
   weatherData.current.weatherCode = getUsableWeatherCode(
     weatherData.current.weatherCode,
     weatherData.current.time,
-    weatherData.hourly.weatherCodes,
-    weatherData.hourly.time
+    weatherData.hourly!.weatherCodes,
+    weatherData.hourly!.time
   );
 
   // fs.writeFileSync(
@@ -130,7 +156,7 @@ const mapResponses = async (
   return new Response(JSON.stringify(weatherData));
 };
 
-const getWeatherData = async (location: string | null) => {
+const getWeatherDataOpenMeteo = async (location: string | null) => {
   const geocoder = getGeocoder();
   const r = await geocoder.geocode(location || "Stockholm");
 
@@ -144,7 +170,114 @@ const getWeatherData = async (location: string | null) => {
   };
   const url = "https://api.open-meteo.com/v1/forecast";
   const response = await fetchWeatherApi(url, params);
-  return mapResponses(response, geocoder);
+  return mapResponsesOpenMeteo(response, geocoder);
+};
+
+const getWeatherDataSmhi = async (
+  location: string | null
+): Promise<Response> => {
+  const geocoder = getGeocoder();
+  const r = await geocoder.geocode(location || "Stockholm");
+  const latitude = r[0].latitude!.toFixed(4);
+  const longitude = r[0].longitude!.toFixed(4);
+
+  const url = `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${longitude}/lat/${latitude}/data.json`;
+  console.log(url);
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const json = response.json();
+      return json; // Updated to return the parsed JSON instead of response.json()
+    })
+    .then(async (data: SmhiForecastResponse) => {
+      const timezone = tzLookup(Number(latitude), Number(longitude));
+      const locations = await geocoder.reverse({
+        lat: Number(latitude),
+        lon: Number(longitude),
+      });
+
+      const res: WeatherData = {
+        location: locations[0].city! + ", " + locations[0].country!,
+        timezone,
+        current: {
+          time: new Date(data.timeSeries[0].validTime).toISOString(),
+          temperature: data.timeSeries[0].parameters.find(
+            (parameter) => parameter.name === "t"
+          )!.values[0],
+          weatherCode:
+            weatherCodeMapSmhi[
+              data.timeSeries[0].parameters.find(
+                (parameter) => parameter.name === "Wsymb2"
+              )!.values[0]
+            ],
+          windSpeed: data.timeSeries[0].parameters.find(
+            (parameter) => parameter.name === "ws"
+          )!.values[0],
+          windDirection: data.timeSeries[0].parameters.find(
+            (parameter) => parameter.name === "wd"
+          )!.values[0],
+          precipitation: data.timeSeries[0].parameters.find(
+            (parameter) => parameter.name === "pmean"
+          )!.values[0],
+        },
+        hourly: {
+          time: data.timeSeries
+            .slice(1)
+            .map((entry) => new Date(entry.validTime).toISOString()),
+          weatherCodes: data.timeSeries
+            .slice(1)
+            .map(
+              (entry) =>
+                weatherCodeMapSmhi[
+                  entry.parameters.find(
+                    (parameter) => parameter.name === "Wsymb2"
+                  )!.values[0]
+                ]
+            ),
+          temperature: data.timeSeries
+            .slice(1)
+            .map(
+              (entry) =>
+                entry.parameters.find((parameter) => parameter.name === "t")!
+                  .values[0]
+            ),
+          precipitation: data.timeSeries
+            .slice(1)
+            .map(
+              (entry) =>
+                entry.parameters.find(
+                  (parameter) => parameter.name === "pmean"
+                )!.values[0]
+            ),
+        },
+      };
+
+      // fs.writeFileSync(
+      //   `./src/pages/api/smhi_${new Date().toISOString()}.json`,
+      //   JSON.stringify(data),
+      //   "utf8"
+      // );
+      return new Response(JSON.stringify(res));
+    });
+
+  // return smhi.Forecasts.GetPointForecast(latitude, longitude).on(
+  //   "loaded",
+  //   (data: SmhiForecastResponse) => {
+  //     // console.log("Forecast data:", JSON.stringify(data));
+  //     // return new Response(JSON.stringify(data));
+
+  //     data.timeSeries.forEach((entry) => {
+  //       console.log(entry.validTime);
+
+  //       entry.parameters.forEach((param) => {
+  //         console.log(param.name, param.values);
+  //       });
+  //     });
+  //   }
+  // );
 };
 
 const mockWeatherData = () => {
@@ -197,5 +330,5 @@ export async function GET({ request }: { request: Request }) {
   const searchParams = url.searchParams;
   const location = searchParams.get("location");
   //return mockWeatherData();
-  return getWeatherData(location);
+  return getWeatherDataSmhi(location);
 }
