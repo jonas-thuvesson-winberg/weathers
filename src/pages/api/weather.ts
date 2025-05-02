@@ -13,6 +13,7 @@ import NodeGeocoder, { type Options } from "node-geocoder";
 import { getGeocoder } from "../../utils/date-utils";
 import tzLookup from "tz-lookup";
 import { weatherCodeMapSmhi } from "../../utils/weather-codes-smhi";
+import { parseLocation } from "../../utils/parse-location";
 
 export interface WeatherData {
   location: string;
@@ -66,21 +67,6 @@ interface SmhiForecastResponse {
   geometry: SmhiGeometry;
   timeSeries: SmhiTimeSeriesEntry[];
 }
-
-const parseLocation = (
-  locations: NodeGeocoder.Entry[],
-  cityFallback: string
-) => {
-  const locationPart = (l: string | null | undefined, fallback?: string) =>
-    l || fallback ? (l || fallback) + ", " : "";
-
-  return (
-    locationPart(locations[0].city, cityFallback) +
-    locationPart(locations[0].district) +
-    locationPart(locations[0].state) +
-    locationPart(locations[0].country)
-  );
-};
 
 const mapResponsesOpenMeteo = async (
   responses: WeatherApiResponse[],

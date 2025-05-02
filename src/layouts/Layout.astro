@@ -66,7 +66,7 @@ const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
 <script>
   import { LoadingUtils } from "../utils/loading-utils";
 
-  document.addEventListener("astro:before-preparation", () => {
+  const loading = () => {
     LoadingUtils.setLoading(true);
     const loading = document.getElementById("loading");
     const inputs = document.querySelectorAll("[data-disable-while-loading]");
@@ -75,16 +75,21 @@ const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
     });
     loading!.classList.add("flex");
     loading!.classList.remove("hidden");
-  });
+  };
 
-  document.addEventListener("astro:after-preparation", () => {
+  const loaded = () => {
     const loading = document.getElementById("loading");
     const inputs = document.querySelectorAll("[data-disable-while-loading]");
     inputs.forEach((input) => {
-      input.setAttribute("disabled", "false");
+      input.removeAttribute("disabled");
     });
     loading!.classList.add("hidden");
     loading!.classList.remove("flex");
     LoadingUtils.setLoading(false);
-  });
+  };
+
+  document.addEventListener("astro:before-preparation", loading);
+  document.addEventListener("astro:after-preparation", loaded);
+  document.addEventListener("manual:loading", loading);
+  document.addEventListener("manual:loaded", loaded);
 </script>
