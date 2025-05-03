@@ -97,7 +97,7 @@ const LocationInput = (props: { location: string }) => {
             id="location"
             name="location"
             value={locationModel()}
-            class="text-lg border rounded-md px-2 py-2 mt-2 sm:mb-2 flex-1 border-gray-400"
+            class="text-lg border rounded-xl px-4 py-2 mt-2 sm:mb-2 flex-1 border-gray-400"
             placeholder="location"
             onInput={handleInput}
             onKeyPress={handleEnter}
@@ -112,14 +112,14 @@ const LocationInput = (props: { location: string }) => {
         <button
           data-disable-while-loading
           type="button"
-          class="flex flex-row justify-between items-center text-lg hover:cursor-pointer bg-sky-300 dark:bg-sky-800 hover:bg-sky-400 dark:hover:bg-sky-900 rounded-md px-4 py-2 my-2 text-white flex-1 w-full"
+          class="flex flex-row justify-between items-center text-lg hover:cursor-pointer bg-sky-300 dark:bg-sky-800 hover:bg-sky-400 dark:hover:bg-sky-900 rounded-xl px-4 py-2 my-2 text-white flex-1 w-full"
           onClick={handleClickSend}
         >
           <span class="ml-2">Search</span>{" "}
           <FiSearch
             data-disable-while-loading
             size={"2rem"}
-            class="text-white mr-2"
+            class="text-white mx-2"
           />
         </button>
       </div>
