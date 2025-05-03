@@ -2,6 +2,7 @@
 import { getDateTimeDescriptive } from "../utils/date-utils";
 import RefreshWeatherPage from "./RefreshWeatherPage";
 import type { WeatherData } from "../pages/api/weather";
+import { WiDirectionUp } from "solid-icons/wi";
 
 const {
   weatherData: {
@@ -24,6 +25,11 @@ const toTitleCase = (str: string) => {
   if (!str) return str;
   return str.slice(0, 1).toUpperCase() + str.slice(1);
 };
+
+const windDirectionRotation = (windDegree: number) => {
+  const rotation = windDegree;
+  return { transform: `rotate(${rotation}deg)` };
+};
 ---
 
 <div class="flex justify-center">
@@ -43,20 +49,28 @@ const toTitleCase = (str: string) => {
         <h3 class="text-5xl font-bold">{toTitleCase(location)}</h3>
         <div class="flex gap-4 flex-row mb-2 mx-10">
           <h3 class="text-5xl font-bold">{temperature.toFixed(1)}°</h3>
-          <div class="text-5xl weather-symbol">{weatherSymbol}</div>
+          <div class="text-5xl weather-symbol text-shadow-none">
+            {weatherSymbol}
+          </div>
         </div>
-        {/* <div class="text-xl mb-3 mx-10">{weatherDescription}</div> */}
-        <div class="text-xl mx-10">
-          Wind: <span class="">{windSpeed.toFixed(2)} m/s</span>,{" "}
-          <span class="">{Math.round(windDirection)}°</span>
+
+        <div class="flex flex-col items-start">
+          {/* <div class="text-xl mb-3 mx-10">{weatherDescription}</div> */}
+          <div class="text-xl mx-10 flex flex-row items-center">
+            Wind: <span class="">&nbsp;{windSpeed.toFixed(2)} m/s</span>{" "}
+            <WiDirectionUp
+              size={"2rem"}
+              style={windDirectionRotation(windDirection)}
+            />
+          </div>
+          {
+            precipitation !== undefined && (
+              <div class="text-xl mx-10">
+                Precip:&nbsp;{precipitation.toFixed(2)} mm
+              </div>
+            )
+          }
         </div>
-        {
-          precipitation !== undefined && (
-            <div class="text-xl mx-10">
-              Precip: {precipitation.toFixed(2)} mm
-            </div>
-          )
-        }
         <div class="text-xl mx-10">
           {getDateTimeDescriptive(time, timezone)}
         </div>
