@@ -5,8 +5,14 @@ import MainWeatherDisplay from "../components/MainWeatherDisplay.astro";
 import WeatherDisplay from "../components/WeatherDisplay/WeatherDisplay.astro";
 import Layout from "../layouts/Layout.astro";
 import LocationInput from "../components/LocationInput";
+import { getCookie, setCookie } from "../utils/astro-cookies-utils";
 
-let location = Astro.url.searchParams.get("location") || "Stockholm";
+const storedLocation = getCookie(Astro.cookies, "location")?.value;
+console.log("Stored location:", storedLocation);
+let location =
+  Astro.url.searchParams.get("location") || storedLocation || "Stockholm";
+setCookie(Astro.cookies, "location", location);
+
 const res = await fetch(
   `${Astro.url.origin}/api/weather?location=${location}`
 ).then(async (r) => await r.json());
