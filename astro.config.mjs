@@ -1,17 +1,15 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
-import node from "@astrojs/node";
 import solidJs from "@astrojs/solid-js";
 import svgr from "vite-plugin-svgr";
 
 import netlify from "@astrojs/netlify";
 
-import mdx from "@astrojs/mdx";
-
 // https://astro.build/config
 export default defineConfig({
   adapter: netlify(),
+  prefetch: true,
 
   vite: {
     plugins: [
@@ -22,5 +20,5 @@ export default defineConfig({
     ],
   },
 
-  integrations: [solidJs(), mdx()],
+  integrations: [solidJs()],
 });

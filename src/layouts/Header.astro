@@ -27,6 +27,7 @@ const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
             data-disable-while-loading
             class="pr-1 sm:px-4 hover:underline"
             href={item[1]}
+            data-astro-prefetch="viewport"
           >
             {item[0]}
           </a>
