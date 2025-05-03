@@ -22,7 +22,7 @@ export const WeatherDisplaySectionClient = (
   return (
     <>
       <div
-        class={`flex justify-between items-center pr-2 pb-2 border-b-2 border-gray-300`}
+        class={`flex justify-between items-center pr-2 pb-2 border-b-2 border-gray-300 dark:border-gray-600`}
       >
         <SectionHeader>{date}</SectionHeader>
         <ChevronToggle

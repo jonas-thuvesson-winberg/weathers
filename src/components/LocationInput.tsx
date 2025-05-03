@@ -105,14 +105,14 @@ const LocationInput = (props: { location: string }) => {
           <FaSolidLocationDot
             data-disable-while-loading
             size={"2rem"}
-            class="text-sky-400 hover:cursor-pointer hover:text-sky-500"
+            class="text-sky-400 dark:text-sky-800 hover:cursor-pointer hover:text-sky-500 dark:hover:text-sky-900"
             onClick={handleGetLocation}
           />
         </div>
         <button
           data-disable-while-loading
           type="button"
-          class="flex flex-row justify-between items-center text-lg hover:cursor-pointer bg-sky-300 hover:bg-sky-400 rounded-md px-4 py-2 my-2 text-white flex-1 w-full"
+          class="flex flex-row justify-between items-center text-lg hover:cursor-pointer bg-sky-300 dark:bg-sky-800 hover:bg-sky-400 dark:hover:bg-sky-900 rounded-md px-4 py-2 my-2 text-white flex-1 w-full"
           onClick={handleClickSend}
         >
           <span class="ml-2">Search</span>{" "}

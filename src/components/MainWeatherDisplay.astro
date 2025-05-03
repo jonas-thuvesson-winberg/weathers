@@ -28,7 +28,7 @@ const toTitleCase = (str: string) => {
 
 <div class="flex justify-center">
   <div
-    class="flex w-full flex-col items-center rounded-xl bg-sky-200 text-white text-shadow-sky-300 text-shadow-lg"
+    class="flex w-full flex-col items-center rounded-xl bg-sky-200 dark:bg-sky-700 text-white text-shadow-sky-300 dark:text-shadow-sky-500 text-shadow-lg"
   >
     <div class="font-xl p-5 w-full flex flex-row justify-end">
       <RefreshWeatherPage client:only="solid-js">
@@ -57,7 +57,9 @@ const toTitleCase = (str: string) => {
             </div>
           )
         }
-        <div class="text-xl mx-10">{getDateTimeDescriptive(time, timezone)}</div>
+        <div class="text-xl mx-10">
+          {getDateTimeDescriptive(time, timezone)}
+        </div>
       </div>
     </div>
   </div>

@@ -3,6 +3,12 @@
 
 html {
   font-size: 16px;
+  @apply bg-white;
+  @apply dark:bg-gray-800;
+  @apply text-black;
+  @apply dark:text-white;
+  @apply transition-colors;
+  @apply duration-300;
 }
 
 .header-container,
@@ -22,8 +28,14 @@ html {
   height: 60px;
   z-index: 1000;
   transition: height 0.1s;
-  border-bottom: 1px solid #eaeaea;
-  box-shadow: 0px -1px 5px 1px rgba(150, 150, 150, 0.75);
+  /* border-bottom: 1px solid #eaeaea; */
+  /* @apply border-b-2;
+  @apply border-gray-200;
+  @apply dark:border-gray-700; */
+  @apply shadow-sm;
+  @apply shadow-gray-300;
+  @apply dark:shadow-gray-900;
+  /* box-shadow: 0px -1px 5px 1px rgba(150, 150, 150, 0.75); */
 }
 
 /* [data-is-scrolling-up="true"] */
