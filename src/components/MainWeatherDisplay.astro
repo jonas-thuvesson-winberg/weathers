@@ -3,6 +3,7 @@ import { getDateTimeDescriptive } from "../utils/date-utils";
 import RefreshWeatherPage from "./RefreshWeatherPage";
 import type { WeatherData } from "../pages/api/weather";
 import { WiDirectionUp } from "solid-icons/wi";
+import { getCategoryBySpeed } from "../utils/wind-codes-beaufort";
 
 const {
   weatherData: {
@@ -46,18 +47,20 @@ const windDirectionRotation = (windDegree: number) => {
       <div
         class="flex flex-col items-center justify-center break-all xs:break-normal text-center"
       >
-        <h3 class="text-5xl font-bold">{toTitleCase(location)}</h3>
+        <h3 class="text-4xl font-bold">{toTitleCase(location)}</h3>
+
         <div class="flex gap-4 flex-row mb-2 mx-10">
           <h3 class="text-5xl font-bold">{temperature.toFixed(1)}°</h3>
           <div class="text-5xl weather-symbol text-shadow-none">
             {weatherSymbol}
           </div>
         </div>
-
-        <div class="flex flex-col items-start">
+        <div class="flex flex-col items-center justtify-center">
           {/* <div class="text-xl mb-3 mx-10">{weatherDescription}</div> */}
           <div class="text-xl mx-10 flex flex-row items-center">
-            Wind: <span class="">&nbsp;{windSpeed.toFixed(2)} m/s</span>{" "}
+            <span class=""
+              >{getCategoryBySpeed(windSpeed)}, {windSpeed.toFixed(2)} m/s</span
+            >{" "}
             <WiDirectionUp
               size={"2rem"}
               style={windDirectionRotation(windDirection)}
@@ -66,12 +69,13 @@ const windDirectionRotation = (windDegree: number) => {
           {
             precipitation !== undefined && (
               <div class="text-xl mx-10">
-                Precip:&nbsp;{precipitation.toFixed(2)} mm
+                {precipitation.toFixed(2)} mm precipitation
               </div>
             )
           }
         </div>
-        <div class="text-xl mx-10">
+        <br />
+        <div class="text-2xl mx-10">
           {getDateTimeDescriptive(time, timezone)}
         </div>
       </div>
