@@ -1,10 +1,24 @@
 ---
-const { time, date, temperature, precipitation, symbol } = Astro.props as {
+import { WiDirectionUp } from "solid-icons/wi";
+import { getCategoryBySpeed } from "../../utils/wind-codes-beaufort";
+import { windDirectionRotationStyle } from "../../utils/wind-utils";
+
+const {
+  time,
+  date,
+  temperature,
+  precipitation,
+  symbol,
+  windDirection,
+  windSpeed,
+} = Astro.props as {
   time: string;
   date: string;
   temperature: number;
   precipitation: number;
   symbol: string;
+  windDirection?: number;
+  windSpeed?: number;
 };
 ---
 
@@ -26,6 +40,19 @@ const { time, date, temperature, precipitation, symbol } = Astro.props as {
     <div class="weather-temperature font-semibold text-lg">
       {temperature.toFixed(1)}°
     </div>
+    {
+      windSpeed != null && windDirection != null && (
+        <div class="weather-wind font-semibold text-lg">
+          <span class="flex">
+            {getCategoryBySpeed(windSpeed)}, {windSpeed.toFixed(2)} m/s
+            <WiDirectionUp
+              size={"2rem"}
+              style={windDirectionRotationStyle(windDirection)}
+            />
+          </span>
+        </div>
+      )
+    }
     <div class="weather-precipitation text-sky-600 dark:text-sky-400">
       {precipitation.toFixed(2)} mm
     </div>

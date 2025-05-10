@@ -31,15 +31,20 @@ export interface WeatherData {
     time: string[];
     weatherCodes: { description: string; symbol: string }[];
     temperature: number[];
-    precipitation: number[];
+    precipitation?: (number | undefined)[] | undefined;
+    windSpeed?: (number | undefined)[] | undefined;
+    windDirection?: (number | undefined)[] | undefined;
     // timeAdjusted?: string[];
   };
   daily?: {
     time: string[];
     weatherCodes: { description: string; symbol: string }[];
     // timeAdjusted?: string[];
-    temperatureMax?: number[];
-    temperatureMin?: number[];
+    temperatureMax?: (number | undefined)[] | undefined;
+    temperatureMin?: (number | undefined)[] | undefined;
+    precipitation?: (number | undefined)[] | undefined;
+    windSpeed?: (number | undefined)[] | undefined;
+    windDirection?: (number | undefined)[] | undefined;
   };
 }
 
@@ -128,6 +133,8 @@ const mapResponsesOpenMeteo = async (
       ),
       temperature: Array.from(hourly.variables(0)!.valuesArray()!), // `.valuesArray()` get an array of floats
       precipitation: Array.from(hourly.variables(2)!.valuesArray()!),
+      windSpeed: Array.from(hourly.variables(3)!.valuesArray()!),
+      windDirection: Array.from(hourly.variables(4)!.valuesArray()!),
     },
     daily: {
       time: toDateRange(
@@ -167,7 +174,8 @@ const getWeatherDataOpenMeteo = async (location: string = "Stockholm") => {
     longitude: r[0].longitude,
     current:
       "temperature_2m,weather_code,precipitation,wind_speed_10m,wind_direction_10m",
-    hourly: "temperature_2m,weather_code,precipitation,",
+    hourly:
+      "temperature_2m,weather_code,precipitation,wind_speed_10m,wind_direction_10m",
     daily: "weather_code,temperature_2m_max,temperature_2m_min",
   };
   const url = "https://api.open-meteo.com/v1/forecast";
@@ -258,9 +266,23 @@ const getWeatherDataSmhi = async (
             .slice(1)
             .map(
               (entry) =>
-                entry.parameters.find(
-                  (parameter) => parameter.name === "pmean"
-                )!.values[0]
+                entry.parameters.find((parameter) => parameter.name === "pmean")
+                  ?.values[0]
+            ),
+          windSpeed: data.timeSeries
+            .slice(1)
+            .map(
+              (entry) =>
+                entry.parameters.find((parameter) => parameter.name === "ws")
+                  ?.values[0]
+            ),
+          windDirection: data.timeSeries
+
+            .slice(1)
+            .map(
+              (entry) =>
+                entry.parameters.find((parameter) => parameter.name === "wd")
+                  ?.values[0]
             ),
         },
       };

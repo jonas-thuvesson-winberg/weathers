@@ -4,6 +4,7 @@ import RefreshWeatherPage from "./RefreshWeatherPage";
 import type { WeatherData } from "../pages/api/weather";
 import { WiDirectionUp } from "solid-icons/wi";
 import { getCategoryBySpeed } from "../utils/wind-codes-beaufort";
+import { windDirectionRotationStyle } from "../utils/wind-utils";
 
 const {
   weatherData: {
@@ -25,11 +26,6 @@ const { description: weatherDescription, symbol: weatherSymbol } = weatherCode;
 const toTitleCase = (str: string) => {
   if (!str) return str;
   return str.slice(0, 1).toUpperCase() + str.slice(1);
-};
-
-const windDirectionRotation = (windDegree: number) => {
-  const rotation = windDegree;
-  return { transform: `rotate(${rotation}deg)` };
 };
 ---
 
@@ -63,7 +59,7 @@ const windDirectionRotation = (windDegree: number) => {
             >{" "}
             <WiDirectionUp
               size={"2rem"}
-              style={windDirectionRotation(windDirection)}
+              style={windDirectionRotationStyle(windDirection)}
             />
           </div>
           {

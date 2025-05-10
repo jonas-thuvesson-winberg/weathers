@@ -16,6 +16,8 @@ interface WeatherEntryData {
   description: string;
   symbol: string;
   timezone: string;
+  windDirection?: number;
+  windSpeed?: number;
 }
 
 interface WeatherSectionData {
@@ -28,7 +30,14 @@ const weatherTableData = (): WeatherSectionData[] => {
   const {
     weatherData: {
       timezone,
-      hourly: { temperature, time, weatherCodes: weatherCode, precipitation },
+      hourly: {
+        temperature,
+        time,
+        weatherCodes: weatherCode,
+        precipitation,
+        windDirection,
+        windSpeed,
+      },
     },
   } = data;
 
@@ -47,10 +56,12 @@ const weatherTableData = (): WeatherSectionData[] => {
       date: getDateDescriptive(time[i], timezone),
       dateTime: new Date(time[i]).toISOString(),
       temperature: Math.floor(Number(temperature[i]))!,
-      precipitation: precipitation[i]!,
+      precipitation: precipitation?.[i]!,
       description: description!,
       symbol: symbol!,
       timezone: timezone!,
+      windDirection: windDirection?.[i],
+      windSpeed: windSpeed?.[i],
     };
 
     const date = entry.date;
@@ -99,6 +110,8 @@ const weatherTableData = (): WeatherSectionData[] => {
                   description={entry.description}
                   symbol={entry.symbol}
                   timezone={entry.timezone}
+                  windDirection={entry.windDirection}
+                  windSpeed={entry.windSpeed}
                 />
               </div>
             ))}
@@ -113,6 +126,8 @@ const weatherTableData = (): WeatherSectionData[] => {
                     description={entry.description}
                     symbol={entry.symbol}
                     timezone={entry.timezone}
+                    windDirection={entry.windDirection}
+                    windSpeed={entry.windSpeed}
                   />
                 </div>
               ))}
