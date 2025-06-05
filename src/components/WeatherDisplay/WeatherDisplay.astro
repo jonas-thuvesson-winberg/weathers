@@ -25,7 +25,11 @@ interface WeatherSectionData {
   entries: WeatherEntryData[];
 }
 
-const data = Astro.props as { weatherData: WeatherData };
+interface Props {
+  weatherData: WeatherData;
+}
+
+const data = Astro.props;
 const weatherTableData = (): WeatherSectionData[] => {
   const {
     weatherData: {
@@ -107,9 +111,7 @@ const weatherTableData = (): WeatherSectionData[] => {
                   time={entry.time}
                   temperature={entry.temperature}
                   precipitation={entry.precipitation}
-                  description={entry.description}
                   symbol={entry.symbol}
-                  timezone={entry.timezone}
                   windDirection={entry.windDirection}
                   windSpeed={entry.windSpeed}
                 />
@@ -123,9 +125,7 @@ const weatherTableData = (): WeatherSectionData[] => {
                     time={entry.time}
                     temperature={entry.temperature}
                     precipitation={entry.precipitation}
-                    description={entry.description}
                     symbol={entry.symbol}
-                    timezone={entry.timezone}
                     windDirection={entry.windDirection}
                     windSpeed={entry.windSpeed}
                   />

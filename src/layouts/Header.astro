@@ -3,12 +3,16 @@ import { FaSolidChevronUp } from "solid-icons/fa";
 import logo from "../assets/logo.png";
 import ScrollToTop from "../components/ScrollToTop";
 
+interface Props {
+  scrollToTop?: boolean;
+}
+
 const links: [string, string][] = [
   ["Home", "/"],
   ["About", "/about"],
 ];
 
-const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
+const { scrollToTop = false } = Astro.props;
 ---
 
 <header
@@ -16,7 +20,11 @@ const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
 >
   {" "}
   <div class="flex flex-row items-center">
-    <img src={logo.src} alt="Logo" class="logo dark:brightness-50 dark:sepia h-15 w-15" />
+    <img
+      src={logo.src}
+      alt="Logo"
+      class="logo dark:brightness-50 dark:sepia h-15 w-15"
+    />
     <h1 class="pr-1 sm:px-4 text-2xl">Weathers</h1>{" "}
   </div>
   <div class="flex items-center">

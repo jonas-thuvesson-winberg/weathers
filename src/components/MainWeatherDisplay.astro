@@ -6,6 +6,10 @@ import { WiDirectionUp } from "solid-icons/wi";
 import { getCategoryBySpeed } from "../utils/wind-codes-beaufort";
 import { windDirectionRotationStyle } from "../utils/wind-utils";
 
+interface Props {
+  weatherData: WeatherData;
+}
+
 const {
   weatherData: {
     location,
@@ -19,7 +23,7 @@ const {
       precipitation,
     },
   },
-} = Astro.props as { weatherData: WeatherData };
+} = Astro.props;
 
 const { description: weatherDescription, symbol: weatherSymbol } = weatherCode;
 

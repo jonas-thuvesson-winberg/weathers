@@ -5,9 +5,12 @@ import { ScrollObserver } from "astro-scroll-observer";
 import "../styles/global.css";
 import Header from "./Header.astro";
 import ScrollToTopFab from "../components/ScrollToTopFab";
-import type { only } from "node:test";
 
-const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
+interface Props {
+  scrollToTop?: boolean;
+}
+
+const { scrollToTop = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -15,7 +18,7 @@ const { scrollToTop = false } = Astro.props as { scrollToTop: boolean };
   <head>
     <ClientRouter />
     <ScrollObserver />
-    
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />

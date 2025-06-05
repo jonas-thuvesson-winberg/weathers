@@ -1,11 +1,16 @@
 ---
 import SectionHeader from "./SectionHeader";
 
-const { date } = Astro.props as {
+interface Props {
   date: string;
-};
+}
+
+const { date } = Astro.props;
 ---
 
 <SectionHeader>{date}</SectionHeader>
-<div class={`flex justify-end pr-2 pb-2 border-b-2 border-gray-300 dark:border-gray-600`}></div>
+<div
+  class={`flex justify-end pr-2 pb-2 border-b-2 border-gray-300 dark:border-gray-600`}
+>
+</div>
 <slot />
