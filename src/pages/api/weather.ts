@@ -10,10 +10,10 @@ import { WeatherApiResponse } from "@openmeteo/sdk/weather-api-response";
 import { mockWeatherData as mockData } from "../../utils/mock-weather-data";
 import * as fs from "node:fs";
 import NodeGeocoder, { type Options } from "node-geocoder";
-import { getGeocoder } from "../../utils/date-utils";
 import tzLookup from "tz-lookup";
 import { weatherCodeMapSmhi } from "../../utils/weather-codes-smhi";
 import { parseLocation } from "../../utils/parse-location";
+import { geoCode, geoCodeReverse } from "../../utils/date-utils";
 
 export interface WeatherData {
   location: string;
@@ -75,7 +75,7 @@ interface SmhiForecastResponse {
 
 const mapResponsesOpenMeteo = async (
   responses: WeatherApiResponse[],
-  geocoder: NodeGeocoder.Geocoder,
+  // geocoder: NodeGeocoder.Geocoder,
   location: string = "Stockholm"
 ) => {
   // Helper function to form time ranges
@@ -98,7 +98,7 @@ const mapResponsesOpenMeteo = async (
   const longitude = response.longitude();
 
   const timezone = tzLookup(latitude, longitude);
-  const locations = await geocoder.reverse({ lat: latitude, lon: longitude });
+  const locations = await geoCodeReverse(latitude, longitude);
 
   const current = response.current()!;
   const hourly = response.hourly()!;
@@ -166,8 +166,7 @@ const mapResponsesOpenMeteo = async (
 };
 
 const getWeatherDataOpenMeteo = async (location: string = "Stockholm") => {
-  const geocoder = getGeocoder();
-  const r = await geocoder.geocode(location);
+  const r = await geoCode(location);
 
   const params = {
     latitude: r[0].latitude,
@@ -180,21 +179,17 @@ const getWeatherDataOpenMeteo = async (location: string = "Stockholm") => {
   };
   const url = "https://api.open-meteo.com/v1/forecast";
   const response = await fetchWeatherApi(url, params);
-  return mapResponsesOpenMeteo(response, geocoder, location);
+  return mapResponsesOpenMeteo(response, location);
 };
 
 const getWeatherDataSmhi = async (
   location: string = "Stockholm"
 ): Promise<Response> => {
-  const geocoder = getGeocoder();
-  const r = await geocoder.geocode(location);
+  const r = await geoCode(location);
   const latitude = r[0].latitude!.toFixed(4);
   const longitude = r[0].longitude!.toFixed(4);
 
-  const locations = await geocoder.reverse({
-    lat: Number(latitude),
-    lon: Number(longitude),
-  });
+  const locations = await geoCodeReverse(Number(latitude), Number(longitude));
 
   if (locations?.[0]?.country?.toLowerCase().trim() !== "sverige")
     return getWeatherDataOpenMeteo(location);

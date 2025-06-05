@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import NodeGeocoder, { type Options } from "node-geocoder";
 import { default as nodeFetch } from "node-fetch";
+import { execFile } from "child_process";
 
 /***
  * SERVER ONLY - needs node-fetch
@@ -8,6 +9,7 @@ import { default as nodeFetch } from "node-fetch";
 export const getGeocoder = () => {
   const options: Options = {
     provider: "openstreetmap",
+    email: "jonasthuvesson@gmail.com",
     // Optional depending on your needs
     // httpAdapter: 'https', // Default
     // formatter: null, // 'gpx', 'string', ...
@@ -17,6 +19,7 @@ export const getGeocoder = () => {
       const headers = {
         ...init?.headers,
         "User-Agent": "Weathers/0.1 (jonasthuvesson@gmail.com)",
+        Referer: "https://weathersastro.netlify.app/",
       };
 
       // TODO: A bit hacky... maybe look into a better way
@@ -99,4 +102,29 @@ export const sortByDates = <T>(
         new Date(getDateString(a)).getTime() -
         new Date(getDateString(b)).getTime()
     );
+};
+
+export const geocoder = Object.freeze(getGeocoder());
+
+const geoCodeCache = new Map<string, any>();
+export const geoCode = async (location: string) => {
+  if (geoCodeCache.has(location)) {
+    return geoCodeCache.get(location);
+  }
+
+  const result = await geocoder.geocode(location);
+  geoCodeCache.set(location, result);
+  return result;
+};
+
+const geoCodeReverseCache = new Map<string, any>();
+export const geoCodeReverse = async (lat: number, lon: number) => {
+  const cacheKey = `${lat},${lon}`;
+  if (geoCodeReverseCache.has(cacheKey)) {
+    return geoCodeReverseCache.get(cacheKey);
+  }
+
+  const result = await geocoder.reverse({ lat, lon });
+  geoCodeReverseCache.set(cacheKey, result);
+  return result;
 };
